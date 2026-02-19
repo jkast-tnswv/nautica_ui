@@ -1,0 +1,19 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import { configureGrpc } from '@core/services/grpc-transport'
+import App from './App'
+import './index.css'
+
+// Initialize gRPC transport pointing at Envoy proxy
+configureGrpc({
+  baseUrl: import.meta.env.VITE_GRPC_URL || 'http://localhost:8080',
+});
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
+)

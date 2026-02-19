@@ -1,0 +1,56 @@
+# Nautica UI - Docker Compose
+#
+# Usage:
+#   docker compose up                    # Start frontend
+#   docker compose up --profile test     # Include test clients
+#   docker compose up --build            # Rebuild everything
+#
+# Ports:
+#   5174 - Frontend (Vite dev server)
+
+name: nautica
+
+services:
+  # ===========================================
+  # Frontend - React + Vite dev server
+  # ===========================================
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.dev
+    container_name: fc-frontend
+    networks:
+      - fc-net
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./frontend:/app
+      - ./shared:/shared
+      - /app/node_modules
+    restart: unless-stopped
+
+  # ===========================================
+  # Test client - simulated network switch
+  # ===========================================
+  test-client:
+    build:
+      context: ./test-client
+      dockerfile: Dockerfile
+    container_name: fc-test-client
+    hostname: test-switch
+    networks:
+      fc-net:
+        ipv4_address: 172.30.0.99
+    mac_address: "02:42:ac:1e:00:99"
+    cap_add:
+      - NET_ADMIN
+    profiles:
+      - test
+
+networks:
+  fc-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+          gateway: 172.30.0.1

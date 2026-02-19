@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package ocean;
+
+import "keel/api/chassis.proto";
+
+enum OceanDeviceStatuses {
+  OCEAN_DEVICE_STATUS_UNSPECIFIED    = 0;
+  OCEAN_DEVICE_STATUS_BOOTSTRAPPED   = 1;
+  OCEAN_DEVICE_STATUS_PROVISIONING   = 2;
+  OCEAN_DEVICE_STATUS_IN_USE         = 3;
+  OCEAN_DEVICE_STATUS_DECOMMISSIONED = 4;
+}
+
+enum OceanDeviceStates {
+  OCEAN_DEVICE_STATE_UNSPECIFIED = 0;
+  OCEAN_DEVICE_STATE_EMBARKED    = 1;
+  OCEAN_DEVICE_STATE_DISEMBARKED = 2;
+}
+
+enum OceanCircuitStatuses {
+  OCEAN_CIRCUIT_STATUS_UNSPECIFIED    = 0;
+  OCEAN_CIRCUIT_STATUS_BOOTSTRAPPED   = 1;
+  OCEAN_CIRCUIT_STATUS_PROVISIONING   = 2;
+  OCEAN_CIRCUIT_STATUS_IN_USE         = 3;
+  OCEAN_CIRCUIT_STATUS_DECOMMISSIONED = 4;
+}
+
+enum OceanCircuitStates {
+  OCEAN_CIRCUIT_STATE_UNSPECIFIED = 0;
+  OCEAN_CIRCUIT_STATE_EMBARKED    = 1;
+  OCEAN_CIRCUIT_STATE_DISEMBARKED = 2;
+}
+
+message OceanDevice {
+  string                device_id           = 1;
+  OceanDeviceStatuses   ocean_device_status = 2;
+  OceanDeviceStates     ocean_device_state  = 3;
+  string                hostname            = 4;
+  chassis.ChassisModels chassis_model       = 5;
+}
+
+message OceanDeviceList {
+  repeated OceanDevice ocean_devices = 1;
+}
+
+message OceanCircuit {
+  string               circuit_id           = 1;
+  OceanCircuitStatuses ocean_circuit_status = 2;
+  OceanCircuitStates   ocean_circuit_state  = 3;
+  OceanDevice          a_device             = 4;
+  string               a_interface          = 5;
+  OceanDevice          z_device             = 6;
+  string               z_interface          = 7;
+  uint32               speed_mbps           = 8;
+}
+
+message OceanCircuitList {
+  repeated OceanCircuit ocean_circuits = 1;
+}
+
+message OceanDeviceListRequest {
+  repeated OceanDeviceStatuses   ocean_device_statuses = 1;
+  repeated OceanDeviceStates     ocean_device_states   = 2;
+  repeated string                hostnames             = 3;
+  repeated chassis.ChassisModels chassis_models        = 4;
+}
+
+message OceanDeviceListResponse {
+  repeated OceanDevice ocean_devices = 1;
+}
+
+message OceanCircuitListRequest {
+  repeated OceanCircuitStatuses ocean_circuit_statuses = 1;
+  repeated OceanCircuitStates   ocean_circuit_states   = 2;
+  string                        a_device               = 3;
+  string                        a_interface            = 4;
+  string                        z_device               = 5;
+  string                        z_interface            = 6;
+}
+
+message OceanCircuitListResponse {
+  repeated OceanCircuit ocean_circuits = 1;
+}
+
+// Ocean Service
+service Ocean {
+  // Show list of OceanDevice(s)
+  rpc ShowOceanDeviceList(OceanDeviceListRequest) returns (OceanDeviceListResponse);
+  // Show list of OceanCircuit(s)
+  rpc ShowOceanCircuitList(OceanCircuitListRequest) returns (OceanCircuitListResponse);
+}

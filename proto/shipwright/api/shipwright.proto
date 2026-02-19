@@ -1,0 +1,197 @@
+syntax = "proto3";
+
+package shipwright;
+
+import "common/api/timestamp.proto";
+import "keel/api/chassis.proto";
+
+enum ShipwrightJobTypes {
+  SHIPWRIGHT_JOB_TYPE_UNSPECIFIED = 0;
+  SHIPWRIGHT_JOB_TYPE_CONFIGURE   = 1;
+  SHIPWRIGHT_JOB_TYPE_RECONFIGURE = 2;
+  SHIPWRIGHT_JOB_TYPE_UNCONFIGURE = 3;
+}
+
+message ShipwrightJobRequest {
+  string             hostname            = 1;
+  ShipwrightJobTypes shipwright_job_type = 2;
+  string             owner               = 3;
+}
+
+message ShipwrightTask {
+  string job_id = 1;
+  string hostname = 2;
+  chassis.ChassisModels chassis_model = 3;
+  ShipwrightJobTypes shipwright_job_type = 4;
+  string owner = 5;
+}
+
+  message ShipwrightJobRequests {
+    repeated ShipwrightJobRequest shipwright_job_requests = 1;
+  }
+
+  enum ShipwrightJobStatuses {
+    SHIPWRIGHT_JOB_STATUS_UNSPECIFIED = 0;
+    SHIPWRIGHT_JOB_STATUS_INIT        = 1;
+    SHIPWRIGHT_JOB_STATUS_RUNNING     = 2;
+    SHIPWRIGHT_JOB_STATUS_STOPPED     = 3;
+    SHIPWRIGHT_JOB_STATUS_DONE        = 4;
+    SHIPWRIGHT_JOB_STATUS_FAILED      = 5;
+    SHIPWRIGHT_JOB_STATUS_ARCHIVED    = 6;
+  }
+
+  message ShipwrightJobResponse {
+    string                job_id                = 1;
+    ShipwrightJobTypes    shipwright_job_type   = 2;
+    string                hostname              = 3;
+    string                owner                 = 4;
+    ShipwrightJobStatuses shipwright_job_status = 5;
+    timestamp.Timestamp   timestamp_job_created = 6;
+    timestamp.Timestamp   timestamp_job_ended   = 7;
+  }
+
+  message ShipwrightJobResponses {
+    repeated ShipwrightJobResponse shipwright_job_response = 1;
+  }
+
+  enum ShipwrightJobActions {
+    SHIPWRIGHT_JOB_ACTION_UNSPECIFIED = 0;
+    SHIPWRIGHT_JOB_ACTION_STOP        = 1;
+    SHIPWRIGHT_JOB_ACTION_RESTART     = 2;
+    SHIPWRIGHT_JOB_ACTION_ARCHIVE     = 3;
+  }
+
+  message ShipwrightJobActionRequest {
+    string               job_id                = 1;
+    ShipwrightJobActions shipwright_job_action = 2;
+    string               owner                 = 3;
+  }
+
+  message ShipwrightJobActionResponse {
+    uint32 job_id = 1;
+  }
+
+  message ShipwrightJobListRequest {
+    repeated string              hostnames             = 1;
+    repeated ShipwrightJobTypes  shipwright_job_types  = 2;
+    repeated string              owners                = 3;
+    optional timestamp.Timestamp timestamp_job_created = 4;
+    optional timestamp.Timestamp timestamp_job_ended   = 5;
+  }
+
+  message ShipwrightJobListResponse {
+    repeated ShipwrightJobResponse shipwright_job_responses = 1;
+  }
+
+  enum ShipwrightStepStatuses {
+    SHIPWRIGHT_STEP_STATUS_UNSPECIFIED = 0;
+    SHIPWRIGHT_STEP_STATUS_INIT        = 1;
+    SHIPWRIGHT_STEP_STATUS_RUNNING     = 2;
+    SHIPWRIGHT_STEP_STATUS_RESTARTING  = 3;
+    SHIPWRIGHT_STEP_STATUS_FAILED      = 4;
+    SHIPWRIGHT_STEP_STATUS_REVIVED     = 5;
+    SHIPWRIGHT_STEP_STATUS_RESCUED     = 6;
+    SHIPWRIGHT_STEP_STATUS_ABORTED     = 7;
+    SHIPWRIGHT_STEP_STATUS_COMPLETED   = 8;
+  }
+
+  message ShipwrightJobDetailsRequest {
+    string job_id = 1;
+  }
+
+  message ShipwrightStep {
+    string                 name                   = 1;
+    uint32                 max_attempts           = 2;
+    ShipwrightStepStatuses shipwright_step_status = 3;
+  }
+
+  message ShipwrightStepGroup {
+    repeated ShipwrightStep shipwright_steps = 1;
+  }
+
+  message ShipwrightWorkflowTarget {
+    string                     hostname            = 1;
+    chassis.ChassisModels chassis_model       = 2;
+    ShipwrightJobTypes         shipwright_job_type = 3;
+  }
+
+  message ShipwrightWorkflowResolver {
+    string                              hostname_pattern    = 1;
+    repeated chassis.ChassisModels chassis_models      = 2;
+    ShipwrightJobTypes                  shipwright_job_type = 3;
+  }
+
+  message ShipwrightWorkflow {
+    map<uint32, ShipwrightStepGroup> shipwright_step_groups = 1;
+  }
+
+  message ShipwrightJobState {
+    string                              job_id                = 1;
+    ShipwrightWorkflow                  shipwright_workflow   = 2;
+    uint32                              current_step_group_id = 3;
+    string                              current_step_name     = 4;
+    uint32                              current_attempt       = 5;
+    ShipwrightJobStatuses               shipwright_job_status = 6;
+    map<string, ShipwrightStepStatuses> step_results          = 7;
+  }
+
+  message ShipwrightJobDetailsResponse {
+    string                job_id              = 1;
+    string                hostname            = 2;
+    ShipwrightJobStatuses job_status          = 3;
+    ShipwrightWorkflow    shipwright_workflow = 4;
+  }
+
+  message ShipwrightJobLogRequest {
+    string job_id = 1;
+  }
+
+  // TODO: need to include log response of some kind
+  message ShipwrightJobLogResponse {
+    string job_id = 1;
+  }
+
+  enum ShipwrightStepActions {
+    SHIPWRIGHT_STEP_ACTION_UNSPECIFIED = 0;
+    SHIPWRIGHT_STEP_ACTION_RESCUE      = 1;
+    SHIPWRIGHT_STEP_ACTION_REVIVE      = 2;
+    SHIPWRIGHT_STEP_ACTION_ABORT       = 3;
+  }
+
+  message ShipwrightStepRequest {
+    string                job_id                 = 1;
+    string                step_name              = 2;
+    ShipwrightStepActions shipwright_step_action = 3;
+    string                owner                  = 4;
+  }
+
+  // TODO: need to verify if additional attributes are needed
+  message ShipwrightStepResponse {
+    string job_id   = 1;
+    string hostname = 2;
+    string owner    = 3;
+  }
+
+  // Shipwright Service
+  service Shipwright {
+    // Create configure ShipwrightJob
+    rpc CreateShipwrightConfigureJob(ShipwrightJobRequest) returns (ShipwrightJobResponse);
+    // Create reconfigure ShipwrightJob
+    // rpc CreateShipwrightReconfigureJob(ShipwrightJobRequest) returns (ShipwrightJobResponse);
+    // Create unconfigure ShipwrightJob
+    // rpc CreateShipwrightUnconfigureJob(ShipwrightJobRequest) returns (ShipwrightJobResponse);
+    
+    // rpc StopShipwrightJob(ShipwrightJobActionRequest) returns (ShipwrightJobActionResponse);
+    // rpc RestartShipwrightJob(ShipwrightJobActionRequest) returns (ShipwrightJobActionResponse);
+    // rpc ArchiveShipwrightJob(ShipwrightJobActionRequest) returns (ShipwrightJobActionResponse);
+    
+    // Show list of ShipwrightJob(s)
+    rpc ShowShipwrightJobsList(ShipwrightJobListRequest) returns (ShipwrightJobListResponse);
+    // Show details of a ShipwrightJob
+    rpc ShowShipwrightJobDetails(ShipwrightJobDetailsRequest) returns (ShipwrightJobDetailsResponse);
+   
+    // rpc ShowShipwrightJobLogs(ShipwrightJobLogRequest) returns (ShipwrightJobLogResponse);
+    // rpc RescueShipwrightJobStep(ShipwrightStepRequest) returns (ShipwrightStepResponse);
+    // rpc ReviveShipwrightJobStep(ShipwrightStepRequest) returns (ShipwrightStepResponse);
+    // rpc AbortShipwrightJobStep(ShipwrightStepRequest) returns (ShipwrightStepResponse);
+  }  

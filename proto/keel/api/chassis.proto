@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package chassis;
+
+import "anchor/api/anchor.proto";
+
+enum ChassisModels {
+  CHASSIS_MODEL_UNSPECIFIED                              = 0;
+  CHASSIS_MODEL_GENERIC                                  = 1;
+  CHASSIS_MODEL_ARISTA_7808                              = 2;
+  CHASSIS_MODEL_ARISTA_7060X6_64PE_F                     = 3;
+  CHASSIS_MODEL_ARISTA_7050DX4_32S_F                     = 4;
+  CHASSIS_MODEL_EDGECORE_AS9737_32DB_32X_400GBE_QSFP_DD  = 5;
+  CHASSIS_MODEL_EDGECORE_ACCTON_AS4630_54TE              = 6;
+  CHASSIS_MODEL_EDGECORE_ACCTON_AS9817_640               = 7;
+  CHASSIS_MODEL_OPENGEAR_IM7248_2_DAC                    = 8;
+  CHASSIS_MODEL_SUPERMICRO_AS_1115CS_TNR                 = 9;
+  CHASSIS_MODEL_SUPERMICRO_AS_4126GS_NMR_LCC             = 10;
+  CHASSIS_MODEL_SUPERMICRO_LCS_SCDU_250L_4002            = 11;
+  CHASSIS_MODEL_NVENT_ENLOGIC_EN6950_0B00                = 12;
+  CHASSIS_MODEL_NVENT_ENLOGIC_EN6950_0R00                = 13;
+}
+
+message Chassis {
+  ChassisModels   chassis_model           = 1;
+  uint32          supervisor_module_slots = 2;
+  uint32          linecard_module_slots   = 3;
+  uint32          power_module_slots      = 4;
+  uint32          water_module_slots      = 5;
+  anchor.Unit     device_height           = 6;
+}

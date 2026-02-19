@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package harbor;
+
+import "keel/api/chassis.proto";
+
+enum HarborJobTypes {
+  HARBOR_JOB_TYPE_UNSPECIFIED = 0;
+  HARBOR_JOB_TYPE_EMBARK      = 1;
+  HARBOR_JOB_TYPE_DISEMBARK   = 2;
+}
+
+message HarborRequest {
+  string         hostname        = 1;
+  HarborJobTypes harbor_job_type = 2;
+  string         owner           = 3;
+  bool           dry_run         = 4;
+  bool           force           = 5;
+}
+
+message HarborRequests {
+  repeated HarborRequest harbor_requests = 1;
+}
+
+enum HarborJobStatuses {
+  HARBOR_JOB_STATUS_UNSPECIFIED = 0;
+  HARBOR_JOB_STATUS_INIT        = 1;
+  HARBOR_JOB_STATUS_RUNNING     = 2;
+  HARBOR_JOB_STATUS_FAILED      = 3;
+  HARBOR_JOB_STATUS_DONE        = 4;
+}
+
+enum HarborStepStatuses {
+  HARBOR_STEP_STATUS_UNSPECIFIED = 0;
+  HARBOR_STEP_STATUS_INIT        = 1;
+  HARBOR_STEP_STATUS_RUNNING     = 2;
+  HARBOR_STEP_STATUS_FAILED      = 3;
+  HARBOR_STEP_STATUS_COMPLETED   = 4;
+}
+
+message HarborStep {
+  string             name               = 1;
+  HarborStepStatuses harbor_step_status = 2;
+}
+
+message HarborWorkflowTarget {
+  string                hostname        = 1;
+  chassis.ChassisModels chassis_model   = 2;
+  HarborJobTypes        harbor_job_type = 3;
+}
+
+message HarborWorkflowResolver {
+  string                         hostname_pattern = 1;
+  repeated chassis.ChassisModels chassis_models   = 2;
+  HarborJobTypes                 harbor_job_type  = 3;
+}
+
+message HarborWorkflow {
+  map<uint32, HarborStepGroup> harbor_step_groups = 1;
+}
+
+message HarborStepGroup {
+  repeated HarborStep harbor_steps = 1;
+}
+
+message HarborJobState {
+  string                          job_id          = 1;
+  HarborWorkflow                  harbor_workflow = 2;
+  string                          current_step    = 3;
+  map<string, HarborStepStatuses> step_results    = 8;
+}
+
+message HarborResponse {
+  string            job_id            = 1;
+  HarborJobTypes    harbor_job_type   = 2;
+  string            hostname          = 3;
+  string            owner             = 4;
+  HarborJobStatuses harbor_job_status = 5;
+  bool              dry_run           = 6;
+}
+
+message HarborListRequest {
+  repeated string            hostnames           = 1;
+  repeated HarborJobTypes    harbor_job_types    = 2;
+  repeated string            owners              = 3;
+  repeated HarborJobStatuses harbor_job_statuses = 4;
+}
+
+message HarborListResponse {
+  repeated HarborResponse harbor_responses = 1;
+}
+
+// Harbor Service
+service Harbor {
+  // Embark a device (put a device into production)
+  rpc Embark (HarborRequest) returns (HarborResponse);
+  // Disembark a device (put a device into maintenance)
+  rpc Disembark (HarborRequest) returns (HarborResponse);
+  // List past and present HarborJob(s)
+  rpc List (HarborListRequest) returns (HarborListResponse);
+}

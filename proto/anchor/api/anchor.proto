@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package anchor;
+
+import "anchor/api/iso_3166.proto";
+
+/*
+ * Location Indentifier Format:
+ * COUNTRY.STATE/PROVINCE.BUILDING.FLOOR.ROOM.PHYSICAL_ROW.RACK_NUMBER.RACK_FACE.RACK_POSITION.RACK_SUB_POSITION
+ *
+ * Examples:
+ * USA.USA_.TUS.TUS1.01.DHA.02.03.F.45RU.00
+ *   - Front of the rack
+ *   - RU 45
+ *   - Sub Position 00 meaning it takes up the RU
+ * USA.USA_FL.MIA.MIA1.01.DHA.02.03.B.L1VU.01
+ *   - Back of the rack
+ *   - VU L1 (Left side, inner most slot)
+ *   - Sub Position 01 meaning it could be a half, third, or quarter height
+ */
+
+enum RackModels {
+  RACK_MODEL_UNSPECIFIED = 0;
+  RACK_MODEL_GENERIC = 1;
+}
+
+enum RackPosts {
+  RACK_POST_UNSPECIFIED = 0;
+  RACK_POST_GENERIC = 1;
+  RACK_POST_2_POST = 2;
+  RACK_POST_4_POST = 3;
+}
+
+enum RackWidths {
+  RACK_WIDTH_UNSPECIFIED = 0;
+  RACK_WIDTH_GENERIC = 1;
+  RACK_WIDTH_19_INCH = 2;
+  RACK_WIDTH_21_INCH = 3;
+  RACK_WIDTH_23_INCH = 4;
+}
+
+message Unit {
+  oneof unit_type {
+    uint32 rack_unit = 1;
+    uint32 open_unit = 2;
+    string vertical_unit = 3;
+  }
+}
+
+enum RackFaces {
+  RACK_FACE_UNSPECIFIED = 0;
+  RACK_FACE_GENERIC = 1;
+  RACK_FACE_FRONT = 2;
+  RACK_FACE_BACK = 3;
+}
+
+message RackPosition {
+  Unit unit = 1;
+  RackFaces rack_face = 2;
+}
+
+message Rack {
+  RackModels rack_model = 1;
+  RackPosts rack_post = 2;
+  RackWidths rack_width = 3;
+  map<uint32, RackPosition> rack_position_map = 4;
+}
+
+message PhysicalRow {
+  //  Rack Name: Rack
+  map<string, Rack> rack_map = 1;
+}
+
+message Room {
+  // PhysicalRow Name: PhysicalRow
+  map<string, PhysicalRow> physical_row_map = 1;
+}
+
+message Floor {
+  // Room Name: Room
+  map<string, Room> room_map = 1;
+}
+
+enum BuildingCodes {
+  BUILDING_CODE_UNSPECIFIED = 0;
+  BUILDING_CODE_GENERIC = 1;
+  BUILDING_CODE_MIA1 = 2;
+  BUILDING_CODE_TUS1 = 3;
+}
+
+message Building {
+  BuildingCodes building_code = 1;
+  // Floor Name: Floor
+  map<string, Floor> floor_map = 2;
+}
+
+enum CampusCodes {
+  CAMPUS_CODE_UNSPECIFIED = 0;
+  CAMPUS_CODE_GENERIC = 1;
+  CAMPUS_CODE_MIA = 2;
+  CAMPUS_CODE_TUS = 3;
+}
+
+message Campus {
+  CampusCodes campus_code = 1;
+  // Building Name: Building
+  map<string, Building> building_map = 2;
+}
+
+message State {
+  iso_3166.StateCodes state_code = 1;
+  // Campus Name: Campus
+  map<string, Campus> campus_map = 2;
+}
+
+message Country {
+  iso_3166.CountryCodes country_code = 1;
+  // State/Province Name: State
+  map<string, State> state_map = 2;
+}

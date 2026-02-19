@@ -1,0 +1,16 @@
+{
+  "name": "@nautica/core",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "peerDependencies": {
+    "@bufbuild/protobuf": "^1.10.0",
+    "@connectrpc/connect": "^1.7.0",
+    "@connectrpc/connect-web": "^1.7.0",
+    "@okta/okta-auth-js": "^7.14.1",
+    "@reduxjs/toolkit": "^2.11.2",
+    "react": "^18.2.0",
+    "react-redux": "^9.2.0"
+  }
+}

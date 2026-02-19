@@ -1,0 +1,26 @@
+FROM node:20-alpine
+
+WORKDIR /workspace
+
+# Copy workspace root + all package.json files so npm can resolve workspaces
+COPY package.json ./
+COPY frontend/package*.json ./frontend/
+COPY shared/core/package.json ./shared/core/
+COPY ocean/ui/package.json ./ocean/ui/
+COPY shipwright/ui/package.json ./shipwright/ui/
+COPY harbor/ui/package.json ./harbor/ui/
+
+RUN npm install --workspace=frontend
+
+WORKDIR /workspace/frontend
+
+COPY <<'EOF' /entrypoint.sh
+#!/bin/sh
+set -e
+exec npm run dev -- --host 0.0.0.0
+EOF
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 5173
+
+CMD ["/entrypoint.sh"]

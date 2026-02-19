@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "shared/core",
+    "ocean/ui",
+    "shipwright/ui",
+    "harbor/ui"
+  ]
+}

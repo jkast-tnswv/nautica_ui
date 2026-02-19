@@ -1,0 +1,37 @@
+# Development compose with live reload
+#
+# Usage: docker compose -f docker-compose.dev.yml up --build
+#
+# Frontend: Vite dev server with hot reload on port 5174
+# Envoy:    gRPC-Web proxy on port 8080 → backend services on host
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.dev
+    container_name: nautica-frontend-dev
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./frontend:/workspace/frontend
+      - ./shared:/workspace/shared
+      - ./ocean/ui:/workspace/ocean/ui
+      - ./shipwright/ui:/workspace/shipwright/ui
+      - ./harbor/ui:/workspace/harbor/ui
+      - /workspace/node_modules
+      - /workspace/frontend/node_modules
+    restart: unless-stopped
+
+  envoy:
+    image: envoyproxy/envoy:v1.31-latest
+    container_name: nautica-envoy
+    ports:
+      - "8080:8080"
+      - "9901:9901"
+    volumes:
+      - ./frontend/envoy.yaml:/etc/envoy/envoy.yaml:ro
+    restart: unless-stopped
+    # On macOS Docker, containers reach the host via host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
