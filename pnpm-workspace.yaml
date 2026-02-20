@@ -1,0 +1,13 @@
+packages:
+  - frontend
+  - shared/core
+  - ocean/ui
+  - shipwright/ui
+  - harbor/ui
+  - ledger/ui
+  - captain/ui
+  - skipper/ui
+  - anchor/ui
+  - keel/ui
+  - quartermaster/ui
+  - tidewatch/ui

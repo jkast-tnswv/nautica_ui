@@ -1,0 +1,106 @@
+/* ═══════════════════════════════════════════════════════════════
+   Navigation: Tabs, Side Tabs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: var(--color-bg-secondary);
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.tab {
+  padding: 10px 24px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-base);
+}
+
+.tab:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+.tab.active {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--shadow-glow);
+}
+
+/* Side Tabs */
+.side-tabs {
+  display: flex;
+  min-height: 400px;
+}
+
+.side-tabs-nav {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  flex-shrink: 0;
+  padding: 8px 0;
+  gap: 2px;
+}
+
+.side-tabs-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  font-size: 0.813rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.side-tabs-item:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+.side-tabs-item.active {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+  border-left-color: var(--color-accent, #6495ed);
+  font-weight: 600;
+}
+
+.side-tabs-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.side-tabs-count {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-muted);
+}
+
+.side-tabs-item.active .side-tabs-count {
+  background: var(--color-accent, #6495ed);
+  color: white;
+}
+
+.side-tabs-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+

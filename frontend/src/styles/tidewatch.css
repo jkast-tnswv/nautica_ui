@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════════════════════
+   TideWatch — Statistics Dashboard
+   ═══════════════════════════════════════════════════════════════ */
+
+.tidewatch-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-range-selector {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg-card);
+}
+
+.time-range-selector:focus-within {
+  border-color: var(--color-accent-blue);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.time-range-input {
+  width: 56px;
+  border: none;
+  border-right: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.time-range-input::-webkit-outer-spin-button,
+.time-range-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-range-unit.select-field {
+  min-width: 0;
+}
+
+.time-range-unit .select-field-trigger {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  min-height: 0;
+  gap: 4px;
+}
+
+.time-range-unit .select-field-trigger:focus {
+  box-shadow: none;
+}
+
+.tidewatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+}
+
+/* Stat Tile */
+.stat-tile {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  overflow: hidden;
+}
+
+.stat-tile:hover {
+  border-color: var(--color-border-hover);
+}
+
+.stat-tile-expanded {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 12px rgba(12, 226, 242, 0.1);
+}
+
+.stat-tile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.stat-tile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--color-bg-hover);
+  color: var(--color-accent-cyan);
+  flex-shrink: 0;
+}
+
+.stat-tile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-tile-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.stat-tile-headline {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.stat-tile-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.stat-tile-sub {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.stat-tile-error {
+  color: var(--color-error);
+  font-size: 0.85rem;
+}
+
+.stat-tile-chevron {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.stat-tile-expanded .stat-tile-chevron {
+  color: var(--color-accent-cyan);
+}
+
+.stat-tile-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow);
+}
+
+.stat-tile-content > div {
+  padding: 0 16px 16px;
+}
+
+/* Breakdown sections inside expanded tiles */
+.tidewatch-breakdown {
+  margin-top: 8px;
+}
+
+.tidewatch-breakdown:first-child {
+  margin-top: 0;
+}
+
+.tidewatch-breakdown-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tidewatch-breakdown-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tidewatch-breakdown-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+.tidewatch-breakdown-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Chart Section */
+.tidewatch-chart-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.tidewatch-chart-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 12px;
+}
+
+.tidewatch-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tidewatch-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.tidewatch-chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tidewatch-chart-legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.tidewatch-chart-svg {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+}
+
+.tidewatch-chart-grid {
+  stroke: var(--color-border);
+  stroke-width: 0.5;
+  stroke-dasharray: 4 4;
+}
+
+.tidewatch-chart-y-label {
+  font-size: 11px;
+  fill: var(--color-text-muted);
+  text-anchor: end;
+  dominant-baseline: middle;
+}
+
+.tidewatch-chart-x-label {
+  font-size: 10px;
+  fill: var(--color-text-muted);
+  text-anchor: middle;
+}
+
+.tidewatch-chart-empty {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}

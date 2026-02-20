@@ -6,11 +6,12 @@
 # Targets:
 #   bazel build //frontend:bundle       Production Vite build (dist/)
 #   bazel test  //frontend:typecheck    TypeScript type-check
+#   bazel test  //frontend:test         Vitest unit tests
 #   bazel run   //frontend:dev          Vite dev server (local only)
 # =============================================================
 
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
-load("@aspect_rules_js//js:defs.bzl", "js_run_binary", "js_binary")
+load("@aspect_rules_js//js:defs.bzl", "js_run_binary", "js_binary", "js_test")
 load("@npm_frontend//:defs.bzl", "npm_link_all_packages")
 
 # Link all npm packages from the lockfile into this package
@@ -18,9 +19,9 @@ npm_link_all_packages(name = "node_modules")
 
 exports_files([
     "tsconfig.json",
+    "tsconfig.node.json",
     "vite.config.ts",
     "index.html",
-    "pnpm-lock.yaml",
 ])
 
 # ---- Static assets (CSS, images, public/) ----
@@ -147,4 +148,80 @@ js_binary(
     ],
     chdir = package_name(),
     tags = ["no-remote"],  # Always run locally
+)
+
+# ---- Vitest unit tests ----
+#
+# Runs the full Vitest suite: frontend components, shared utilities,
+# and all service UI tabs. Vitest handles its own TS compilation
+# via Vite/esbuild, so we pass source files directly (no ts_project).
+#
+# Usage: bazel test //frontend:test
+
+js_test(
+    name = "test",
+    entry_point = "run-vitest.mjs",
+    data = [
+        # Frontend source + test files
+        ":static_assets",
+        "vitest.config.ts",
+        "vite.config.ts",
+        "tsconfig.json",
+        "tsconfig.node.json",
+    ] + glob([
+        "src/**/*.ts",
+        "src/**/*.tsx",
+    ]) + [
+        # Shared core sources + tests (js_library handles output tree placement)
+        "//shared/core:srcs",
+        "//shared/core:tests",
+
+        # Service UI sources + tests (10 packages)
+        "//ocean/ui:srcs",
+        "//ocean/ui:tests",
+        "//shipwright/ui:srcs",
+        "//shipwright/ui:tests",
+        "//harbor/ui:srcs",
+        "//harbor/ui:tests",
+        "//ledger/ui:srcs",
+        "//ledger/ui:tests",
+        "//captain/ui:srcs",
+        "//captain/ui:tests",
+        "//skipper/ui:srcs",
+        "//skipper/ui:tests",
+        "//anchor/ui:srcs",
+        "//anchor/ui:tests",
+        "//keel/ui:srcs",
+        "//keel/ui:tests",
+        "//quartermaster/ui:srcs",
+        "//quartermaster/ui:tests",
+        "//tidewatch/ui:srcs",
+        "//tidewatch/ui:tests",
+        "//island/ui:srcs",
+        "//island/ui:tests",
+
+        # npm dependencies (vitest pulls in all transitive deps)
+        ":node_modules/vitest",
+        ":node_modules/vite",
+        ":node_modules/@vitejs/plugin-react",
+        ":node_modules/@testing-library/react",
+        ":node_modules/@testing-library/jest-dom",
+        ":node_modules/react",
+        ":node_modules/react-dom",
+        ":node_modules/react-redux",
+        ":node_modules/@reduxjs/toolkit",
+        ":node_modules/@types/react",
+        ":node_modules/@types/react-dom",
+        ":node_modules/qrcode",
+        ":node_modules/@bufbuild/protobuf",
+        ":node_modules/@connectrpc/connect-web",
+        ":node_modules/@connectrpc/connect",
+        ":node_modules/@okta/okta-auth-js",
+        ":node_modules/jsbarcode",
+        ":node_modules/react-router-dom",
+    ],
+    chdir = package_name(),
+    # Tests may take longer than default timeout
+    timeout = "moderate",
+    tags = ["vitest"],
 )

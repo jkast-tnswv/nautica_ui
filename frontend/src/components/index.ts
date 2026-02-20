@@ -3,6 +3,8 @@
 // Reusable UI primitives
 export { ActionBar } from './ActionBar';
 export type { ActionBarProps } from './ActionBar';
+export { Badge } from './Badge';
+export type { BadgeVariant, BadgeSize } from './Badge';
 export { Button, RefreshButton } from './Button';
 export { IconButton } from './IconButton';
 export { Card } from './Card';
@@ -33,6 +35,8 @@ export { Notifications, NotificationPopup } from './Notifications';
 export { NumberInput } from './NumberInput';
 export { PageSelector } from './PageSelector';
 export type { PageConfig } from './PageSelector';
+export { ProgressBar } from './ProgressBar';
+export type { ProgressSegment } from './ProgressBar';
 export { ResizableModal } from './ResizableModal';
 export { ScratchPad } from './ScratchPad';
 export { SelectField } from './SelectField';
@@ -42,6 +46,9 @@ export { TabbedPage } from './TabbedPage';
 export type { TabbedPageTab } from './TabbedPage';
 export { Table, SimpleTable, Cell } from './Table';
 export type { TableColumn, TableAction, TableProps, SimpleTableProps } from './Table';
+export { StatTile } from './StatTile';
+export { TimeRangeSelector } from './TimeRangeSelector';
+export { TimeSeriesChart } from './TimeSeriesChart';
 export { ThemeSelector, ThemeSelectorToggle } from './ThemeSelector';
 export type { Theme } from './ThemeSelector';
 export { ToastProvider, useToast, useToastActions } from './Toast';

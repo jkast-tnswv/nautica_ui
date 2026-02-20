@@ -2,19 +2,20 @@ import { useState, useRef, useEffect, useMemo, useCallback, type SelectHTMLAttri
 import { createPortal } from 'react-dom';
 import { Icon } from './Icon';
 
-interface SelectFieldProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
+interface SelectFieldProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange' | 'size'> {
   label?: string;
   name: string;
   options: readonly { value: string; label: string }[];
   error?: string;
   placeholder?: string;
   icon?: string;
+  size?: 'default' | 'sm';
   onChange?: (e: { target: { name: string; value: string } }) => void;
 }
 
 const SEARCH_THRESHOLD = 1;
 
-export function SelectField({ label, name, id, options, error, value, onChange, disabled, placeholder, icon, className, ...rest }: SelectFieldProps) {
+export function SelectField({ label, name, id, options, error, value, onChange, disabled, placeholder, icon, size, className, ...rest }: SelectFieldProps) {
   const fieldId = id || name;
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -162,7 +163,7 @@ export function SelectField({ label, name, id, options, error, value, onChange, 
   );
 
   const dropdown = (
-    <div className={`select-field${className ? ` ${className}` : ''}`} ref={dropdownRef}>
+    <div className={`select-field${size === 'sm' ? ' select-field-sm' : ''}${className ? ` ${className}` : ''}`} ref={dropdownRef}>
       <button
         id={fieldId}
         type="button"

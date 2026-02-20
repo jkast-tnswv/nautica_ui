@@ -5,6 +5,7 @@ import { harborJobsReducer } from '@twcode/harbor-ui';
 import { ledgerReducer } from '@twcode/ledger-ui';
 import { captainUsersReducer, captainGroupsReducer } from '@twcode/captain-ui';
 import { skipperReducer } from '@twcode/skipper-ui';
+import { islandFirmwareReducer, islandAssignmentsReducer } from '@twcode/island-ui';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,8 @@ export const store = configureStore({
     captainUsers: captainUsersReducer,
     captainGroups: captainGroupsReducer,
     skipper: skipperReducer,
+    islandFirmware: islandFirmwareReducer,
+    islandAssignments: islandAssignmentsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

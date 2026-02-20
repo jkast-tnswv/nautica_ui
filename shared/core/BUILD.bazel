@@ -12,6 +12,7 @@
 #   bazel build //shared/core:core   Compile to JS + declarations
 # =============================================================
 
+load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
@@ -35,6 +36,23 @@ write_file(
   },
   "include": ["**/*.ts", "**/*.tsx"]
 }"""],
+)
+
+# Source files — consumed by //frontend:test (vitest handles its own TS compilation)
+js_library(
+    name = "srcs",
+    srcs = glob(
+        ["**/*.ts", "**/*.tsx"],
+        exclude = ["**/*.test.ts", "**/*.test.tsx"],
+    ),
+    visibility = ["//frontend:__pkg__"],
+)
+
+# Test files — consumed by //frontend:test
+js_library(
+    name = "tests",
+    srcs = glob(["**/*.test.ts", "**/*.test.tsx"]),
+    visibility = ["//frontend:__pkg__"],
 )
 
 ts_project(

@@ -1,0 +1,14 @@
+{
+  "name": "@twcode/keel-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "@nautica/core": "*"
+  },
+  "peerDependencies": {
+    "@bufbuild/protobuf": "^1.10.0",
+    "react": "^18.2.0"
+  }
+}

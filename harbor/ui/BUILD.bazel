@@ -1,0 +1,18 @@
+# harbor/ui/BUILD.bazel — Harbor service UI package
+
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+
+js_library(
+    name = "srcs",
+    srcs = glob(
+        ["**/*.ts", "**/*.tsx"],
+        exclude = ["**/*.test.ts", "**/*.test.tsx"],
+    ),
+    visibility = ["//frontend:__pkg__"],
+)
+
+js_library(
+    name = "tests",
+    srcs = glob(["**/*.test.ts", "**/*.test.tsx"]),
+    visibility = ["//frontend:__pkg__"],
+)

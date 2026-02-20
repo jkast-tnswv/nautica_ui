@@ -99,7 +99,7 @@ export function shipwrightJobStatusLabel(s: ShipwrightJobStatuses): string {
     case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_INIT: return 'Rigging (Init)';
     case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_RUNNING: return 'Under Sail (Running)';
     case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_STOPPED: return 'Anchor Down (Stopped)';
-    case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_DONE: return 'Docked (Done)';
+    case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_DONE: return 'In Port (Done)';
     case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_FAILED: return 'Shipwrecked (Failed)';
     case ShipwrightJobStatuses.SHIPWRIGHT_JOB_STATUS_ARCHIVED: return 'Dry Dock (Archived)';
     default: return 'Unknown';
@@ -126,7 +126,7 @@ export function shipwrightStepStatusLabel(s: ShipwrightStepStatuses): string {
     case ShipwrightStepStatuses.SHIPWRIGHT_STEP_STATUS_REVIVED: return 'Salvaged (Revived)';
     case ShipwrightStepStatuses.SHIPWRIGHT_STEP_STATUS_RESCUED: return 'Rescued (Rescued)';
     case ShipwrightStepStatuses.SHIPWRIGHT_STEP_STATUS_ABORTED: return 'Scuttled (Aborted)';
-    case ShipwrightStepStatuses.SHIPWRIGHT_STEP_STATUS_COMPLETED: return 'Docked (Completed)';
+    case ShipwrightStepStatuses.SHIPWRIGHT_STEP_STATUS_COMPLETED: return 'In Port (Done)';
     default: return 'Unknown';
   }
 }
@@ -160,7 +160,7 @@ export function harborJobStatusLabel(s: HarborJobStatuses): string {
     case HarborJobStatuses.HARBOR_JOB_STATUS_INIT: return 'Rigging (Init)';
     case HarborJobStatuses.HARBOR_JOB_STATUS_RUNNING: return 'Under Sail (Running)';
     case HarborJobStatuses.HARBOR_JOB_STATUS_FAILED: return 'Shipwrecked (Failed)';
-    case HarborJobStatuses.HARBOR_JOB_STATUS_DONE: return 'Docked (Done)';
+    case HarborJobStatuses.HARBOR_JOB_STATUS_DONE: return 'In Port (Done)';
     default: return 'Unknown';
   }
 }
@@ -180,7 +180,7 @@ export function harborStepStatusLabel(s: HarborStepStatuses): string {
     case HarborStepStatuses.HARBOR_STEP_STATUS_INIT: return 'Rigging (Init)';
     case HarborStepStatuses.HARBOR_STEP_STATUS_RUNNING: return 'Under Sail (Running)';
     case HarborStepStatuses.HARBOR_STEP_STATUS_FAILED: return 'Shipwrecked (Failed)';
-    case HarborStepStatuses.HARBOR_STEP_STATUS_COMPLETED: return 'Docked (Completed)';
+    case HarborStepStatuses.HARBOR_STEP_STATUS_COMPLETED: return 'In Port (Done)';
     default: return 'Unknown';
   }
 }

@@ -1,8 +1,12 @@
 import { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import type { RootState } from '../store';
 import type { AsyncThunk } from '@reduxjs/toolkit';
-import type { EntityState } from '../store/createEntitySlice';
+
+interface EntityStateShape<T> {
+  items: T[];
+  loading: boolean;
+  error: string | null;
+}
 
 export interface UseEntityDataOptions<FilterArg> {
   autoRefresh?: boolean;
@@ -18,8 +22,8 @@ export interface UseEntityDataReturn<T> {
 }
 
 export function useEntityData<T, FilterArg = void>(
-  fetchThunk: AsyncThunk<T[], FilterArg, {}>,
-  selector: (state: RootState) => EntityState<T>,
+  fetchThunk: AsyncThunk<T[], any, any>,
+  selector: (state: any) => EntityStateShape<T>,
   options: UseEntityDataOptions<FilterArg> = {} as UseEntityDataOptions<FilterArg>,
 ): UseEntityDataReturn<T> {
   const { autoRefresh = true, refreshInterval = 10000, filters } = options;
@@ -27,19 +31,19 @@ export function useEntityData<T, FilterArg = void>(
   const { items: data, loading, error } = useAppSelector(selector);
 
   useEffect(() => {
-    dispatch(fetchThunk(filters as FilterArg));
+    dispatch(fetchThunk(filters));
   }, [dispatch, filters]);
 
   useEffect(() => {
     if (!autoRefresh) return;
     const interval = setInterval(() => {
-      dispatch(fetchThunk(filters as FilterArg));
+      dispatch(fetchThunk(filters));
     }, refreshInterval);
     return () => clearInterval(interval);
   }, [autoRefresh, refreshInterval, dispatch, filters]);
 
   const refresh = useCallback(async () => {
-    await dispatch(fetchThunk(filters as FilterArg));
+    await dispatch(fetchThunk(filters));
   }, [dispatch, filters]);
 
   return { data, loading, error, refresh };

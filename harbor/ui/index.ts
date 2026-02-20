@@ -1,4 +1,4 @@
-export { HarborJobs } from './HarborJobs';
-export { useHarborJobs, type UseHarborJobsOptions, type UseHarborJobsReturn } from './useHarborJobs';
-export { HarborService } from './service';
-export { default as harborJobsReducer, fetchHarborJobs, createHarborEmbark, createHarborDisembark } from './harborJobsSlice';
+export { HarborJobs } from './tabs/HarborJobs';
+export { useHarborJobs, type UseHarborJobsOptions, type UseHarborJobsReturn } from './hooks/useHarborJobs';
+export { HarborService } from './services/service';
+export { default as harborJobsReducer, fetchHarborJobs, createHarborEmbark, createHarborDisembark } from './slices/harborJobsSlice';

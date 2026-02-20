@@ -29,6 +29,7 @@ import { AccessPage } from './components/AccessPage';
 import { DeployPage } from './components/DeployPage';
 import { InfraPage } from './components/InfraPage';
 import { TideWatchPage } from './components/TideWatchPage';
+import { IslandPage } from './components/IslandPage';
 import { LayoutProvider } from './context';
 function WaveLogo({ className }: { className?: string }) {
   return (
@@ -42,13 +43,14 @@ function WaveLogo({ className }: { className?: string }) {
 declare const __COMMIT_HASH__: string;
 
 const PAGES: DropdownOption[] = [
+  { id: 'tidewatch', label: 'TideWatch', icon: 'analytics', description: 'Resource statistics dashboard' },
   { id: 'infra', label: 'Anchor & Keel', icon: 'domain', description: 'Anchor locations and Keel hardware catalog' },
   { id: 'access', label: 'Captain', icon: 'admin_panel_settings', description: 'Captain users and groups' },
   { id: 'dns', label: 'Ledger', icon: 'travel_explore', description: 'Ledger DNS record search' },
   { id: 'devices', label: 'Ocean', icon: 'dns', description: 'Ocean devices and circuits' },
   { id: 'jobs', label: 'Shipwright & Harbor', icon: 'build', description: 'Shipwright provisioning & Harbor maintenance' },
   { id: 'deploy', label: 'Skipper', icon: 'rocket_launch', description: 'Skipper package builds and deployments' },
-  { id: 'tidewatch', label: 'TideWatch', icon: 'analytics', description: 'Resource statistics dashboard' },
+  { id: 'island', label: 'Island', icon: 'system_update', description: 'Island firmware server' },
 ];
 
 const LOADING_MESSAGES = [
@@ -262,6 +264,7 @@ function AppContent() {
           <Route path="/deploy" element={<DeployPage />} />
           <Route path="/infra" element={<InfraPage />} />
           <Route path="/tidewatch" element={<TideWatchPage />} />
+          <Route path="/island" element={<IslandPage />} />
           <Route path="/" element={<Navigate to="/devices" replace />} />
           <Route path="*" element={<Navigate to="/devices" replace />} />
         </Routes>

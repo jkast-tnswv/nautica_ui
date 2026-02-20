@@ -1,5 +1,5 @@
-export { CaptainUsers } from './CaptainUsers';
-export { CaptainGroups } from './CaptainGroups';
-export { CaptainService } from './service';
-export { default as captainUsersReducer, createCaptainUser } from './captainUsersSlice';
-export { default as captainGroupsReducer, createCaptainGroup } from './captainGroupsSlice';
+export { CaptainUsers } from './tabs/CaptainUsers';
+export { CaptainGroups } from './tabs/CaptainGroups';
+export { CaptainService } from './services/service';
+export { default as captainUsersReducer, createCaptainUser } from './slices/captainUsersSlice';
+export { default as captainGroupsReducer, createCaptainGroup } from './slices/captainGroupsSlice';

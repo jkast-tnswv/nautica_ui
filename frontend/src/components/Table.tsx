@@ -1,6 +1,9 @@
 import { ReactNode, useState, useCallback, useMemo, useRef, useEffect, isValidElement, Children, cloneElement, ReactElement } from 'react';
 import { useTableFeatures, getDefaultPageSize, getTablePageSize, setTablePageSize } from '@core';
 import type { ColumnFilterDef } from '@core';
+import { Badge } from './Badge';
+import type { BadgeVariant } from './Badge';
+import { Button } from './Button';
 import { Checkbox } from './Checkbox';
 import { SelectField } from './SelectField';
 import { IconButton } from './IconButton';
@@ -324,16 +327,14 @@ export function Table<T>({
   }, [tableId, initialPageSize]);
 
   const toggleExpand = useCallback((key: string | number) => {
-    setExpandedKeys((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) {
-        next.delete(key);
-      } else {
-        next.add(key);
-      }
-      return next;
-    });
-  }, [setExpandedKeys]);
+    const next = new Set(expandedKeys);
+    if (next.has(key)) {
+      next.delete(key);
+    } else {
+      next.add(key);
+    }
+    setExpandedKeys(next);
+  }, [expandedKeys, setExpandedKeys]);
 
   // Build default getSearchText from searchable columns
   const getSearchText = useMemo(() => {
@@ -381,7 +382,7 @@ export function Table<T>({
     return defs;
   }, [columns]);
 
-  // Compute unique filter options per column (skip columns with <2 distinct values — nothing to filter)
+  // Compute unique filter options per column
   const filterOptions = useMemo(() => {
     const map = new Map<number, string[]>();
     for (const def of columnFilterDefs) {
@@ -389,7 +390,6 @@ export function Table<T>({
       for (const row of data) {
         values.add(def.getValue(row));
       }
-      if (values.size < 2) continue;
       const sorted = [...values].sort((a, b) => a.localeCompare(b));
       map.set(def.columnIndex, sorted);
     }
@@ -614,13 +614,13 @@ export function Table<T>({
         <div className="table-selection-bar">
           <span className="table-selection-count">{selectedCount} selected</span>
           {selectedCount < filteredCount && (
-            <button type="button" className="btn btn-secondary btn-sm" onClick={selectAllFiltered}>
+            <Button type="button" size="sm" variant="secondary" onClick={selectAllFiltered}>
               Select All {filteredCount}
-            </button>
+            </Button>
           )}
-          <button type="button" className="btn btn-secondary btn-sm" onClick={clearSelection}>
+          <Button type="button" size="sm" variant="secondary" onClick={clearSelection}>
             Clear
-          </button>
+          </Button>
           {bulkActions.length > 0 && (
             <div className="table-selection-actions">
               {bulkActions.map((action, idx) => {
@@ -900,6 +900,7 @@ export function Table<T>({
             <div className="table-pagination-size">
               <SelectField
                 name="page-size"
+                size="sm"
                 value={String(pageSize)}
                 options={pageSizeOptions.map((size) => ({ value: String(size), label: `${size} / page` }))}
                 onChange={(e) => handlePageSizeChange(Number(e.target.value))}
@@ -979,8 +980,8 @@ export const Cell = {
   ),
 
   /** Render a badge with variant */
-  badge: (text: string, variant: 'success' | 'error' | 'warning' | 'info' | 'default' = 'default') => (
-    <span className={`badge badge-${variant}`}>{text}</span>
+  badge: (text: string, variant: BadgeVariant = 'default') => (
+    <Badge variant={variant}>{text}</Badge>
   ),
 
   /** Render a dash for empty/null values */

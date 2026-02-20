@@ -1,0 +1,346 @@
+/* ═══════════════════════════════════════════════════════════════
+   Buttons & Actions
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-base);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.btn-danger {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--color-error);
+  color: white;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  border-radius: 8px;
+}
+
+.btn-lg {
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: 12px;
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Icon Buttons */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  line-height: 0;
+}
+
+.icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon-btn-md {
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.icon-btn-lg {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.icon-btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.icon-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+.icon-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.icon-btn-secondary {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+.icon-btn-secondary:hover:not(:disabled) {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.icon-btn-danger {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.icon-btn-danger:hover:not(:disabled) {
+  background: var(--color-error);
+  color: white;
+}
+
+.icon-btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.icon-btn-ghost:hover:not(:disabled) {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+/* Actions (legacy) */
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 4px;
+  justify-content: start;
+}
+
+
+.actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Feedback: Messages, Loading, Empty States
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Messages */
+.message {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.message::before {
+  font-size: 1rem;
+}
+
+.message.success {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.message.success::before {
+  content: '✓';
+}
+
+.message.error {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.message.error::before {
+  content: '✕';
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+}
+
+.empty-state-sm {
+  padding: 32px 16px;
+}
+
+.empty-state-lg {
+  padding: 80px 24px;
+}
+
+.empty-state p {
+  margin: 8px 0;
+}
+
+.empty-state-message {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 12px 0 8px 0;
+}
+
+.empty-state-description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.empty-state-action {
+  margin-top: 16px;
+}
+
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--color-text-muted);
+}
+
+.loading-state p {
+  margin-top: 12px;
+  font-size: 0.875rem;
+}
+
+.inline-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Utilities: Text, Flex, Grid, Spacing, Code Blocks
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Text utilities */
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+
+/* Clickable elements */
+.clickable {
+  cursor: pointer;
+}
+
+
+
+/* Detail/info grid for displaying key-value pairs */
+.info-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  font-size: 0.9rem;
+}
+
+.info-grid .label {
+  color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .actions .btn {
+    width: 100%;
+  }
+}
+

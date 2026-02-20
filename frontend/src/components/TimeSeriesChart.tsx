@@ -1,5 +1,9 @@
 import { useMemo } from 'react';
-import type { TimeSeriesBucket } from './useTideWatch';
+
+export interface TimeSeriesBucket {
+  time: number;
+  statusCounts: Record<string, number>;
+}
 
 const VARIANT_COLORS: Record<string, string> = {
   success: 'var(--color-success, #22c55e)',

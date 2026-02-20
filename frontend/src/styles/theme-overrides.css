@@ -1,0 +1,789 @@
+/* ═══════════════════════════════════════════════════════════════
+   Theme Overrides
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Light theme adjustments for cards */
+[data-theme="light"] .card,
+[data-theme="plain"] .card,
+[data-theme="evergreen-light"] .card,
+[data-theme="ocean-light"] .card,
+[data-theme="nautical-light"] .card,
+[data-theme="contrast-light"] .card {
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .card:hover,
+[data-theme="plain"] .card:hover,
+[data-theme="evergreen-light"] .card:hover,
+[data-theme="ocean-light"] .card:hover,
+[data-theme="nautical-light"] .card:hover,
+[data-theme="contrast-light"] .card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Plain theme: remove gradient text effect */
+[data-theme="plain"] header h1 {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: var(--color-text-primary);
+  background-clip: unset;
+}
+
+[data-theme="plain"] .tab.active,
+[data-theme="plain"] .btn-primary {
+  background: var(--color-accent-blue);
+}
+
+[data-theme="plain"] .theme-option.active {
+  border-color: var(--color-accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Nautical shared: structural rules common to dark & light
+   ═══════════════════════════════════════════════════════════════ */
+
+[data-theme*="nautical"] .card { border-radius: 8px; }
+[data-theme*="nautical"] .card h2 { letter-spacing: 0.02em; }
+[data-theme*="nautical"] th { letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase; }
+[data-theme*="nautical"] tbody tr { border-left: 2px solid transparent; }
+[data-theme*="nautical"] .btn { border-radius: 6px; }
+[data-theme*="nautical"] .tab { border-radius: 4px; }
+[data-theme*="nautical"] .tabs { border-radius: 6px; }
+[data-theme*="nautical"] .status { border-radius: 4px; letter-spacing: 0.06em; font-size: 0.7rem; }
+[data-theme*="nautical"] .badge { border-radius: 4px; letter-spacing: 0.06em; font-size: 0.7rem; }
+[data-theme*="nautical"] .form-group input,
+[data-theme*="nautical"] .form-group textarea,
+[data-theme*="nautical"] .form-group select,
+[data-theme*="nautical"] .select-field-trigger { border-radius: 6px; }
+[data-theme*="nautical"] .modal { border-radius: 8px; }
+[data-theme*="nautical"] .info-section { border-radius: 6px; }
+[data-theme*="nautical"] .dropdown-select-trigger { border-radius: 6px; }
+[data-theme*="nautical"] .dropdown-select-menu { border-radius: 6px; }
+[data-theme*="nautical"] .table-empty { border-radius: 6px; border-style: solid; }
+[data-theme*="nautical"] ::-webkit-scrollbar-thumb { border-radius: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Nautical Dark: Captain's cabin — brass fittings, dark wood, porthole views
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Page background: deep water with subtle moonlight shimmer */
+[data-theme="nautical-dark"] body {
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(74, 144, 217, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(69, 184, 172, 0.05) 0%, transparent 40%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 120px,
+      rgba(74, 144, 217, 0.015) 120px,
+      rgba(74, 144, 217, 0.015) 121px
+    );
+}
+
+/* Header: ship's bridge — brass rail along bottom */
+[data-theme="nautical-dark"] header {
+  border-bottom: 2px solid rgba(201, 168, 76, 0.35);
+  background: linear-gradient(180deg, #101e2e 0%, #0d1a28 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 -1px 0 rgba(201, 168, 76, 0.1);
+}
+
+/* Header title: gold gradient like engraved brass plate */
+[data-theme="nautical-dark"] header h1 {
+  background: linear-gradient(135deg, #c9a84c 0%, #e8d48a 50%, #c9a84c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Cards: dark wood panels with brass edges */
+[data-theme="nautical-dark"] .card {
+  border: 1px solid rgba(201, 168, 76, 0.18);
+  box-shadow: inset 0 1px 0 rgba(201, 168, 76, 0.08), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="nautical-dark"] .card:hover {
+  border-color: rgba(201, 168, 76, 0.35);
+  box-shadow: inset 0 1px 0 rgba(201, 168, 76, 0.12), 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* Tables: ship's manifest / logbook feel */
+[data-theme="nautical-dark"] th {
+  border-bottom: 2px solid rgba(201, 168, 76, 0.25);
+}
+
+[data-theme="nautical-dark"] tbody tr:hover {
+  border-left-color: rgba(201, 168, 76, 0.4);
+  background: rgba(201, 168, 76, 0.04);
+}
+
+[data-theme="nautical-dark"] td {
+  border-bottom-color: rgba(30, 58, 84, 0.6);
+}
+
+/* Code blocks: brass-trimmed instrument readouts */
+[data-theme="nautical-dark"] td code {
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  background: rgba(11, 22, 34, 0.6);
+  color: #45b8ac;
+}
+
+[data-theme="nautical-dark"] .tab.active,
+[data-theme="nautical-dark"] .btn-primary {
+  background: linear-gradient(135deg, #4a90d9 0%, #c9a84c 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="nautical-dark"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="nautical-dark"] .btn-secondary {
+  border-color: rgba(201, 168, 76, 0.18);
+}
+
+[data-theme="nautical-dark"] .btn-secondary:hover:not(:disabled) {
+  border-color: rgba(201, 168, 76, 0.35);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+/* Tabs: navigation chart tabs */
+[data-theme="nautical-dark"] .tabs {
+  border: 1px solid rgba(201, 168, 76, 0.12);
+}
+
+[data-theme="nautical-dark"] .status.online {
+  border: 1px solid rgba(61, 170, 115, 0.3);
+}
+
+[data-theme="nautical-dark"] .status.offline {
+  border: 1px solid rgba(209, 69, 69, 0.3);
+}
+
+[data-theme="nautical-dark"] .status.provisioning {
+  border: 1px solid rgba(212, 160, 60, 0.3);
+}
+
+[data-theme="nautical-dark"] .status.accent {
+  border: 1px solid rgba(74, 144, 217, 0.3);
+}
+
+[data-theme="nautical-dark"] .status.neutral {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Form inputs: recessed instrument panels */
+[data-theme="nautical-dark"] .form-group input,
+[data-theme="nautical-dark"] .form-group textarea,
+[data-theme="nautical-dark"] .form-group select,
+[data-theme="nautical-dark"] .select-field-trigger {
+  border-color: rgba(201, 168, 76, 0.15);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="nautical-dark"] .form-group input:focus,
+[data-theme="nautical-dark"] .form-group textarea:focus,
+[data-theme="nautical-dark"] .form-group select:focus,
+[data-theme="nautical-dark"] .select-field-trigger:focus {
+  border-color: rgba(201, 168, 76, 0.5);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(201, 168, 76, 0.1);
+}
+
+/* Modals: captain's chart overlay */
+[data-theme="nautical-dark"] .modal {
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(201, 168, 76, 0.1);
+}
+
+[data-theme="nautical-dark"] .modal-overlay {
+  background: rgba(5, 10, 18, 0.7);
+}
+
+/* Info sections: like weathered parchment notes */
+[data-theme="nautical-dark"] .info-section {
+  border-color: rgba(201, 168, 76, 0.12);
+  border-left: 3px solid rgba(201, 168, 76, 0.3);
+}
+
+/* Dropdowns: brass-framed selectors */
+[data-theme="nautical-dark"] .dropdown-select-trigger {
+  border-color: rgba(201, 168, 76, 0.15);
+}
+
+[data-theme="nautical-dark"] .dropdown-select-menu {
+  border: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+/* Empty states: like blank pages in a ship's log */
+[data-theme="nautical-dark"] .table-empty {
+  border-color: rgba(201, 168, 76, 0.12);
+}
+
+/* Scrollbar: brass rails */
+[data-theme="nautical-dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.25);
+}
+
+[data-theme="nautical-dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.4);
+}
+
+[data-theme="nautical-dark"] ::-webkit-scrollbar-track {
+  background: #0b1622;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Nautical Light: Island harbor — sun-bleached wood, rope, sea glass
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Page background: sandy beach with distant water shimmer */
+[data-theme="nautical-light"] body {
+  background-image:
+    radial-gradient(ellipse at 30% 0%, rgba(42, 100, 150, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 80%, rgba(26, 138, 126, 0.06) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 100%, rgba(139, 111, 46, 0.04) 0%, transparent 40%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 200px,
+      rgba(139, 111, 46, 0.02) 200px,
+      rgba(139, 111, 46, 0.02) 201px
+    );
+}
+
+/* Header: sun-bleached boardwalk rail */
+[data-theme="nautical-light"] header {
+  border-bottom: 2px solid rgba(139, 111, 46, 0.2);
+  background: linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%);
+  box-shadow: 0 2px 6px rgba(139, 111, 46, 0.08);
+}
+
+/* Header title: deep harbor blue */
+[data-theme="nautical-light"] header h1 {
+  background: linear-gradient(135deg, #2a6496 0%, #1a8a7e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Cards: weathered driftwood panels */
+[data-theme="nautical-light"] .card {
+  border: 1px solid rgba(139, 111, 46, 0.18);
+  background: linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%);
+  box-shadow: 0 1px 3px rgba(139, 111, 46, 0.08);
+}
+
+[data-theme="nautical-light"] .card:hover {
+  border-color: rgba(139, 111, 46, 0.3);
+  box-shadow: 0 4px 12px rgba(139, 111, 46, 0.1);
+}
+
+/* Tables: harbor manifest on parchment */
+[data-theme="nautical-light"] th {
+  background: rgba(139, 111, 46, 0.06);
+  border-bottom: 2px solid rgba(139, 111, 46, 0.15);
+  color: #6b5a30;
+}
+
+[data-theme="nautical-light"] tbody tr:hover {
+  border-left-color: rgba(42, 100, 150, 0.35);
+  background: rgba(42, 100, 150, 0.04);
+}
+
+[data-theme="nautical-light"] td {
+  border-bottom-color: rgba(139, 111, 46, 0.1);
+}
+
+/* Code blocks: sea glass chips */
+[data-theme="nautical-light"] td code {
+  background: rgba(42, 100, 150, 0.07);
+  border: 1px solid rgba(42, 100, 150, 0.15);
+  color: #1a5a3a;
+  border-radius: 4px;
+}
+
+[data-theme="nautical-light"] .tab.active,
+[data-theme="nautical-light"] .btn-primary {
+  background: linear-gradient(135deg, #2a6496 0%, #1a8a7e 100%);
+  box-shadow: 0 1px 3px rgba(42, 100, 150, 0.2);
+}
+
+[data-theme="nautical-light"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 4px 16px rgba(42, 100, 150, 0.25);
+}
+
+[data-theme="nautical-light"] .btn-secondary {
+  border-color: rgba(139, 111, 46, 0.22);
+  background: rgba(250, 248, 245, 0.8);
+}
+
+[data-theme="nautical-light"] .btn-secondary:hover:not(:disabled) {
+  border-color: rgba(42, 100, 150, 0.3);
+  background: rgba(42, 100, 150, 0.06);
+  color: #2a6496;
+}
+
+/* Tabs: harbor navigation markers */
+[data-theme="nautical-light"] .tabs {
+  border: 1px solid rgba(139, 111, 46, 0.12);
+  background: rgba(139, 111, 46, 0.04);
+}
+
+[data-theme="nautical-light"] .status.online {
+  border: 1px solid rgba(45, 138, 94, 0.3);
+}
+
+[data-theme="nautical-light"] .status.offline {
+  border: 1px solid rgba(181, 48, 48, 0.25);
+}
+
+[data-theme="nautical-light"] .status.provisioning {
+  border: 1px solid rgba(184, 138, 42, 0.3);
+}
+
+[data-theme="nautical-light"] .status.accent {
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+[data-theme="nautical-light"] .status.neutral {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Form inputs: etched into driftwood */
+[data-theme="nautical-light"] .form-group input,
+[data-theme="nautical-light"] .form-group textarea,
+[data-theme="nautical-light"] .form-group select,
+[data-theme="nautical-light"] .select-field-trigger {
+  border-color: rgba(139, 111, 46, 0.2);
+  background: #fdfcfa;
+}
+
+[data-theme="nautical-light"] .form-group input:focus,
+[data-theme="nautical-light"] .form-group textarea:focus,
+[data-theme="nautical-light"] .form-group select:focus,
+[data-theme="nautical-light"] .select-field-trigger:focus {
+  border-color: #2a6496;
+  box-shadow: 0 0 0 3px rgba(42, 100, 150, 0.12);
+}
+
+/* Modals: parchment chart overlay */
+[data-theme="nautical-light"] .modal {
+  border: 1px solid rgba(139, 111, 46, 0.2);
+  background: linear-gradient(180deg, #fdfcfa 0%, #f5f0e8 100%);
+  box-shadow: 0 8px 32px rgba(139, 111, 46, 0.15);
+}
+
+[data-theme="nautical-light"] .modal-overlay {
+  background: rgba(26, 42, 58, 0.25);
+}
+
+/* Info sections: weathered note cards with rope border */
+[data-theme="nautical-light"] .info-section {
+  border-color: rgba(139, 111, 46, 0.15);
+  border-left: 3px solid rgba(42, 100, 150, 0.35);
+  background: rgba(42, 100, 150, 0.03);
+}
+
+/* Dropdowns: harbor markers */
+[data-theme="nautical-light"] .dropdown-select-trigger {
+  border-color: rgba(139, 111, 46, 0.2);
+}
+
+[data-theme="nautical-light"] .dropdown-select-menu {
+  border: 1px solid rgba(139, 111, 46, 0.15);
+  background: #fdfcfa;
+  box-shadow: 0 4px 16px rgba(139, 111, 46, 0.12);
+}
+
+/* Empty states: blank page in harbor logbook */
+[data-theme="nautical-light"] .table-empty {
+  border-color: rgba(139, 111, 46, 0.15);
+  background: rgba(139, 111, 46, 0.03);
+}
+
+/* Scrollbar: rope-textured */
+[data-theme="nautical-light"] ::-webkit-scrollbar-thumb {
+  background: rgba(139, 111, 46, 0.2);
+}
+
+[data-theme="nautical-light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 111, 46, 0.35);
+}
+
+[data-theme="nautical-light"] ::-webkit-scrollbar-track {
+  background: #f0ebe3;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   High Contrast themes: accessibility-first overrides
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Shared overrides for both contrast themes */
+[data-theme="contrast-dark"],
+[data-theme="contrast-light"] {
+  /* Remove gradient text — use solid color for readability */
+}
+
+[data-theme="contrast-dark"] header h1,
+[data-theme="contrast-light"] header h1 {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: var(--color-accent-blue);
+  background-clip: unset;
+  font-weight: 700;
+}
+
+/* Cards: thick borders, square corners */
+[data-theme="contrast-dark"] .card,
+[data-theme="contrast-light"] .card {
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+}
+
+[data-theme="contrast-dark"] .card:hover,
+[data-theme="contrast-light"] .card:hover {
+  border-color: var(--color-border-hover);
+}
+
+/* Buttons: bold, square, thick borders */
+[data-theme="contrast-dark"] .btn,
+[data-theme="contrast-light"] .btn {
+  border-radius: 6px;
+  font-weight: 600;
+  border-width: 2px;
+}
+
+[data-theme="contrast-dark"] .btn-sm,
+[data-theme="contrast-light"] .btn-sm {
+  border-radius: 4px;
+}
+
+/* Primary buttons: solid color, no gradient */
+[data-theme="contrast-dark"] .tab.active,
+[data-theme="contrast-dark"] .btn-primary {
+  background: #5cb8ff;
+  color: #000000;
+  border: 2px solid #5cb8ff;
+}
+
+[data-theme="contrast-dark"] .btn-primary:hover:not(:disabled) {
+  background: #8dd0ff;
+  border-color: #8dd0ff;
+  box-shadow: 0 0 0 2px #5cb8ff;
+}
+
+[data-theme="contrast-light"] .tab.active,
+[data-theme="contrast-light"] .btn-primary {
+  background: #0050a0;
+  color: #ffffff;
+  border: 2px solid #0050a0;
+}
+
+[data-theme="contrast-light"] .btn-primary:hover:not(:disabled) {
+  background: #003d7a;
+  border-color: #003d7a;
+  box-shadow: 0 0 0 2px #0050a0;
+}
+
+/* Secondary buttons */
+[data-theme="contrast-dark"] .btn-secondary {
+  border: 2px solid #888888;
+  color: #ffffff;
+}
+
+[data-theme="contrast-dark"] .btn-secondary:hover:not(:disabled) {
+  border-color: #ffffff;
+  background: #1a1a1a;
+}
+
+[data-theme="contrast-light"] .btn-secondary {
+  border: 2px solid #333333;
+  color: #000000;
+}
+
+[data-theme="contrast-light"] .btn-secondary:hover:not(:disabled) {
+  border-color: #000000;
+  background: #e8e8e8;
+}
+
+/* Danger buttons */
+[data-theme="contrast-dark"] .btn-danger {
+  border: 2px solid #ff5252;
+}
+
+[data-theme="contrast-light"] .btn-danger {
+  border: 2px solid #b30000;
+}
+
+/* Tabs: square, solid, thick bottom accent */
+[data-theme="contrast-dark"] .tabs,
+[data-theme="contrast-light"] .tabs {
+  border-radius: 6px;
+  border: 2px solid var(--color-border);
+}
+
+[data-theme="contrast-dark"] .tab,
+[data-theme="contrast-light"] .tab {
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+[data-theme="contrast-dark"] .tab.active {
+  box-shadow: none;
+  border-bottom: 3px solid #ffffff;
+}
+
+[data-theme="contrast-light"] .tab.active {
+  box-shadow: none;
+  border-bottom: 3px solid #000000;
+}
+
+/* Table headers: thick bottom border, bold */
+[data-theme="contrast-dark"] th,
+[data-theme="contrast-light"] th {
+  border-bottom: 3px solid var(--color-border);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Table rows: visible borders */
+[data-theme="contrast-dark"] td,
+[data-theme="contrast-light"] td {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Code blocks: thick border */
+[data-theme="contrast-dark"] td code {
+  border: 2px solid #444444;
+  background: #000000;
+  color: #00e5cc;
+}
+
+[data-theme="contrast-light"] td code {
+  border: 2px solid #333333;
+  background: #f5f5f5;
+  color: #0050a0;
+}
+
+/* Status badges: thick bordered, bold */
+[data-theme="contrast-dark"] .status,
+[data-theme="contrast-light"] .status {
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+[data-theme="contrast-dark"] .status.online {
+  border: 2px solid #00e676;
+}
+
+[data-theme="contrast-dark"] .status.offline {
+  border: 2px solid #ff5252;
+}
+
+[data-theme="contrast-dark"] .status.provisioning {
+  border: 2px solid #ffea00;
+  color: #ffea00;
+}
+
+[data-theme="contrast-dark"] .status.accent {
+  border: 2px solid #448aff;
+  color: #448aff;
+}
+
+[data-theme="contrast-dark"] .status.neutral {
+  border: 2px solid #90a4ae;
+  color: #90a4ae;
+}
+
+[data-theme="contrast-light"] .status.online {
+  border: 2px solid #006b2d;
+}
+
+[data-theme="contrast-light"] .status.offline {
+  border: 2px solid #b30000;
+}
+
+[data-theme="contrast-light"] .status.provisioning {
+  border: 2px solid #7a5c00;
+}
+
+[data-theme="contrast-light"] .status.accent {
+  border: 2px solid #1565c0;
+  color: #1565c0;
+}
+
+[data-theme="contrast-light"] .status.neutral {
+  border: 2px solid #607d8b;
+  color: #607d8b;
+}
+
+[data-theme="contrast-dark"] .badge,
+[data-theme="contrast-light"] .badge {
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Form inputs: thick borders, strong focus */
+[data-theme="contrast-dark"] .form-group input,
+[data-theme="contrast-dark"] .form-group textarea,
+[data-theme="contrast-dark"] .form-group select,
+[data-theme="contrast-dark"] .select-field-trigger {
+  border: 2px solid #444444;
+  border-radius: 6px;
+  background: #000000;
+  color: #ffffff;
+}
+
+[data-theme="contrast-dark"] .form-group input:focus,
+[data-theme="contrast-dark"] .form-group textarea:focus,
+[data-theme="contrast-dark"] .form-group select:focus,
+[data-theme="contrast-dark"] .select-field-trigger:focus {
+  border-color: #5cb8ff;
+  box-shadow: none;
+  outline: 3px solid #5cb8ff;
+  outline-offset: 1px;
+}
+
+[data-theme="contrast-light"] .form-group input,
+[data-theme="contrast-light"] .form-group textarea,
+[data-theme="contrast-light"] .form-group select,
+[data-theme="contrast-light"] .select-field-trigger {
+  border: 2px solid #333333;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #000000;
+}
+
+[data-theme="contrast-light"] .form-group input:focus,
+[data-theme="contrast-light"] .form-group textarea:focus,
+[data-theme="contrast-light"] .form-group select:focus,
+[data-theme="contrast-light"] .select-field-trigger:focus {
+  border-color: #0050a0;
+  box-shadow: none;
+  outline: 3px solid #0050a0;
+  outline-offset: 1px;
+}
+
+/* Focus-visible: strong outline for keyboard navigation */
+[data-theme="contrast-dark"] *:focus-visible,
+[data-theme="contrast-light"] *:focus-visible {
+  outline-offset: 2px;
+}
+
+[data-theme="contrast-dark"] *:focus-visible {
+  outline: 3px solid #5cb8ff;
+}
+
+[data-theme="contrast-light"] *:focus-visible {
+  outline: 3px solid #0050a0;
+}
+
+/* Modals, info sections, dropdowns: shared border-radius */
+[data-theme="contrast-dark"] .modal,
+[data-theme="contrast-light"] .modal,
+[data-theme="contrast-dark"] .info-section,
+[data-theme="contrast-light"] .info-section,
+[data-theme="contrast-dark"] .dropdown-select-trigger,
+[data-theme="contrast-light"] .dropdown-select-trigger,
+[data-theme="contrast-dark"] .dropdown-select-menu,
+[data-theme="contrast-light"] .dropdown-select-menu {
+  border-radius: 6px;
+}
+
+[data-theme="contrast-dark"] .modal {
+  border: 2px solid #888888;
+}
+
+[data-theme="contrast-dark"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="contrast-light"] .modal {
+  border: 2px solid #333333;
+}
+
+[data-theme="contrast-light"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Info sections: thick left accent */
+[data-theme="contrast-dark"] .info-section {
+  border: 2px solid #444444;
+  border-left: 4px solid #5cb8ff;
+}
+
+[data-theme="contrast-light"] .info-section {
+  border: 2px solid #333333;
+  border-left: 4px solid #0050a0;
+}
+
+/* Dropdowns: thick borders */
+[data-theme="contrast-dark"] .dropdown-select-trigger {
+  border: 2px solid #444444;
+}
+
+[data-theme="contrast-dark"] .dropdown-select-menu {
+  border: 2px solid #888888;
+}
+
+[data-theme="contrast-light"] .dropdown-select-trigger {
+  border: 2px solid #333333;
+}
+
+[data-theme="contrast-light"] .dropdown-select-menu {
+  border: 2px solid #333333;
+}
+
+/* Empty state: solid border (not dashed) */
+[data-theme="contrast-dark"] .table-empty,
+[data-theme="contrast-light"] .table-empty {
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+}
+
+/* Header: thick bottom border */
+[data-theme="contrast-dark"] header {
+  border-bottom: 3px solid #444444;
+}
+
+[data-theme="contrast-light"] header {
+  border-bottom: 3px solid #333333;
+}
+
+/* Clickable text: underline for discoverability */
+[data-theme="contrast-dark"] .status.clickable,
+[data-theme="contrast-light"] .status.clickable {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Scrollbar: high visibility */
+[data-theme="contrast-dark"] ::-webkit-scrollbar-thumb,
+[data-theme="contrast-light"] ::-webkit-scrollbar-thumb {
+  border-radius: 0;
+}
+
+[data-theme="contrast-dark"] ::-webkit-scrollbar-thumb {
+  background: #888888;
+}
+
+[data-theme="contrast-dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
+
+[data-theme="contrast-dark"] ::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+[data-theme="contrast-light"] ::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+[data-theme="contrast-light"] ::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+[data-theme="contrast-light"] ::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+

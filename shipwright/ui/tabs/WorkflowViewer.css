@@ -1,0 +1,147 @@
+/* WorkflowViewer — step workflow visualization */
+
+.wf-viewer {
+  padding: 16px;
+}
+
+/* ── Header ── */
+.wf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.wf-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Progress summary bar ── */
+.wf-summary {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--color-bg-card, #1f2937);
+  border: 1px solid var(--color-border, #374151);
+  font-size: 12px;
+}
+
+.wf-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-text-secondary);
+}
+
+.wf-summary-item .material-icons-outlined {
+  font-size: 14px;
+}
+
+.wf-summary-count {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.wf-summary-item.is-success { color: var(--color-success); }
+.wf-summary-item.is-warning { color: var(--color-warning); }
+.wf-summary-item.is-error   { color: var(--color-error); }
+.wf-summary-item.is-info    { color: var(--color-accent-cyan, #06b6d4); }
+
+/* ── Progress bar spacing ── */
+.wf-progress {
+  margin-bottom: 16px;
+}
+
+/* ── Step groups lane ── */
+.wf-groups {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+/* ── Step group card ── */
+.wf-group {
+  min-width: 200px;
+  border: 1px solid var(--color-border, #374151);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--color-bg-card, #1f2937);
+  flex-shrink: 0;
+}
+
+.wf-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wf-group-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.wf-group-progress {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.wf-group-progress.all-done {
+  color: var(--color-success);
+}
+
+.wf-group-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Step card ── */
+.wf-step {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid var(--color-text-muted, #6b7280);
+  background: var(--color-bg-secondary, #111827);
+  font-size: 13px;
+}
+
+.wf-step.is-success { border-left-color: var(--color-success); }
+.wf-step.is-warning { border-left-color: var(--color-warning); }
+.wf-step.is-error   { border-left-color: var(--color-error); }
+.wf-step.is-info    { border-left-color: var(--color-accent-cyan, #06b6d4); }
+
+.wf-step-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.wf-step-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wf-step-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wf-step-status .material-icons-outlined {
+  font-size: 13px;
+}
+
+.wf-step-meta {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}

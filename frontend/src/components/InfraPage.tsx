@@ -1,7 +1,7 @@
 import { TabbedPage } from './TabbedPage';
-import { AnchorLocations } from './AnchorLocations';
-import { KeelCatalog } from './KeelCatalog';
-import { QuartermasterParts } from './QuartermasterParts';
+import { AnchorLocations } from '@twcode/anchor-ui';
+import { KeelCatalog } from '@twcode/keel-ui';
+import { QuartermasterParts } from '@twcode/quartermaster-ui';
 
 const tabs = [
   { id: 'locations', label: 'Anchor', icon: 'location_on', component: AnchorLocations },

@@ -15,6 +15,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
+    "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
       "@core": ["../shared/core"],
@@ -31,10 +32,20 @@
       "@twcode/captain-ui/*": ["../captain/ui/*"],
       "@twcode/skipper-ui": ["../skipper/ui"],
       "@twcode/skipper-ui/*": ["../skipper/ui/*"],
+      "@twcode/anchor-ui": ["../anchor/ui"],
+      "@twcode/anchor-ui/*": ["../anchor/ui/*"],
+      "@twcode/keel-ui": ["../keel/ui"],
+      "@twcode/keel-ui/*": ["../keel/ui/*"],
+      "@twcode/quartermaster-ui": ["../quartermaster/ui"],
+      "@twcode/quartermaster-ui/*": ["../quartermaster/ui/*"],
+      "@twcode/tidewatch-ui": ["../tidewatch/ui"],
+      "@twcode/tidewatch-ui/*": ["../tidewatch/ui/*"],
+      "@twcode/island-ui": ["../island/ui"],
+      "@twcode/island-ui/*": ["../island/ui/*"],
       "@components": ["src/components"],
       "@components/*": ["src/components/*"]
     }
   },
-  "include": ["src", "../shared", "../ocean", "../shipwright", "../harbor", "../ledger", "../captain", "../skipper"],
+  "include": ["src", "../shared", "../ocean", "../shipwright", "../harbor", "../ledger", "../captain", "../skipper", "../anchor", "../keel", "../quartermaster", "../tidewatch", "../island"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

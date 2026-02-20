@@ -60,27 +60,29 @@ use_repo(crate, "crates")
 
 bazel_dep(name = "aspect_rules_js", version = "2.9.2")
 bazel_dep(name = "aspect_rules_ts", version = "3.8.4")
+bazel_dep(name = "rules_nodejs", version = "6.3.3")
 
-# Node.js toolchain — pinned to match current Dockerfile (node:20-alpine)
-node = use_extension("@aspect_rules_js//js:extensions.bzl", "node")
-node.toolchain(node_version = "20.11.1")
+# Node.js toolchain — Node 22 required for ESM require() support (vitest 4 + vite 7)
+node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
+node.toolchain(node_version = "22.13.0")
+use_repo(node, "nodejs_toolchains")
 
 # ---- npm dependencies ----
 # rules_js uses pnpm's resolution internally. Since this project uses
 # npm (package-lock.json), you must first generate a pnpm lockfile:
 #
-#   cd frontend && npx pnpm import
-#   cd mobile && npx pnpm import
+#   npx pnpm import   (generates pnpm-lock.yaml from package-lock.json)
+#   bazel sync --only=npm_frontend
 #
 # This creates pnpm-lock.yaml from the existing package-lock.json.
-# Both lockfiles should be committed to version control.
+# The lockfile should be committed to version control.
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
 
 npm.npm_translate_lock(
     name = "npm_frontend",
     npmrc = "//:.npmrc",
-    pnpm_lock = "//frontend:pnpm-lock.yaml",
+    pnpm_lock = "//:pnpm-lock.yaml",
     # Verify integrity hashes from the lockfile
     verify_node_modules_ignored = "//:.bazelignore",
 )
@@ -97,6 +99,7 @@ use_repo(npm, "npm_mobile")
 # TypeScript compiler version — match the project's typescript dep
 ts = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ts")
 ts.deps(ts_version = "5.2.2")
+use_repo(ts, "npm_typescript")
 
 # ============================================================
 # OCI Container Images

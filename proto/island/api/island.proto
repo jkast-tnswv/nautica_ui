@@ -1,0 +1,169 @@
+syntax = "proto3";
+
+package island;
+
+import "common/api/timestamp.proto";
+import "keel/api/chassis.proto";
+
+// Firmware vendor identifiers
+enum IslandFirmwareVendors {
+  ISLAND_FIRMWARE_VENDOR_UNSPECIFIED = 0;
+  ISLAND_FIRMWARE_VENDOR_ARISTA      = 1;
+  ISLAND_FIRMWARE_VENDOR_EDGECORE    = 2;
+  ISLAND_FIRMWARE_VENDOR_OPENGEAR    = 3;
+}
+
+// Firmware lifecycle statuses
+enum IslandFirmwareStatuses {
+  ISLAND_FIRMWARE_STATUS_UNSPECIFIED = 0;
+  ISLAND_FIRMWARE_STATUS_UPLOADING   = 1;
+  ISLAND_FIRMWARE_STATUS_AVAILABLE   = 2;
+  ISLAND_FIRMWARE_STATUS_DEPRECATED  = 3;
+  ISLAND_FIRMWARE_STATUS_DELETED     = 4;
+}
+
+// Async task types for the processing queue
+enum IslandTaskTypes {
+  ISLAND_TASK_TYPE_UNSPECIFIED = 0;
+  ISLAND_TASK_TYPE_UPLOAD      = 1;
+  ISLAND_TASK_TYPE_DELETE      = 2;
+  ISLAND_TASK_TYPE_ASSIGN      = 3;
+  ISLAND_TASK_TYPE_UNASSIGN    = 4;
+}
+
+// Actions on existing firmware
+enum IslandActionStatuses {
+  ISLAND_ACTION_UNSPECIFIED = 0;
+  ISLAND_ACTION_DEPRECATE   = 1;
+  ISLAND_ACTION_RESTORE     = 2;
+}
+
+// Core firmware metadata
+message IslandFirmware {
+  string                   firmware_id      = 1;
+  string                   filename         = 2;
+  IslandFirmwareVendors    vendor           = 3;
+  string                   platform         = 4;
+  string                   version          = 5;
+  uint64                   size_bytes       = 6;
+  string                   checksum_sha256  = 7;
+  IslandFirmwareStatuses   status           = 8;
+  string                   owner            = 9;
+  timestamp.Timestamp      timestamp_created   = 10;
+  timestamp.Timestamp      timestamp_modified  = 11;
+}
+
+// Task queued for async processing
+message IslandTask {
+  string           firmware_id      = 1;
+  string           job_id           = 2;
+  IslandTaskTypes  island_task_type = 3;
+  string           owner            = 4;
+}
+
+// Upload firmware binary + metadata
+message IslandUploadFirmwareRequest {
+  IslandTask             island_task = 1;
+  IslandFirmwareVendors  vendor      = 2;
+  string                 platform    = 3;
+  string                 version     = 4;
+  string                 filename    = 5;
+  bytes                  content     = 6;
+}
+
+message IslandUploadFirmwareResponse {
+  IslandFirmware island_firmware = 1;
+}
+
+// Get firmware binary by ID
+message IslandGetFirmwareFileRequest {
+  string firmware_id = 1;
+}
+
+message IslandGetFirmwareFileResponse {
+  string filename     = 1;
+  bytes  content      = 2;
+  string content_type = 3;
+}
+
+// Get firmware metadata by ID
+message IslandGetFirmwareRequest {
+  string firmware_id = 1;
+}
+
+message IslandGetFirmwareResponse {
+  IslandFirmware island_firmware = 1;
+}
+
+// List firmware with filters
+message IslandListFirmwareRequest {
+  repeated IslandFirmwareVendors  vendors    = 1;
+  repeated string                 platforms  = 2;
+  repeated IslandFirmwareStatuses statuses   = 3;
+  repeated string                 owners     = 4;
+}
+
+message IslandListFirmwareResponse {
+  repeated IslandFirmware island_firmwares = 1;
+}
+
+// Delete firmware by ID
+message IslandDeleteFirmwareRequest {
+  string firmware_id = 1;
+  string owner       = 2;
+}
+
+message IslandDeleteFirmwareResponse {
+  string firmware_id = 1;
+}
+
+// Assign firmware to a chassis model
+message IslandAssignFirmwareRequest {
+  string                firmware_id   = 1;
+  chassis.ChassisModels chassis_model = 2;
+  string                owner         = 3;
+}
+
+message IslandAssignFirmwareResponse {
+  string                firmware_id   = 1;
+  chassis.ChassisModels chassis_model = 2;
+}
+
+// List firmware assignments
+message IslandListAssignmentsRequest {
+  repeated chassis.ChassisModels chassis_models = 1;
+  repeated string                firmware_ids   = 2;
+}
+
+message IslandAssignment {
+  string                firmware_id   = 1;
+  chassis.ChassisModels chassis_model = 2;
+  IslandFirmware        island_firmware = 3;
+}
+
+message IslandListAssignmentsResponse {
+  repeated IslandAssignment island_assignments = 1;
+}
+
+// Action on existing firmware (deprecate, restore)
+message IslandFirmwareActionRequest {
+  string               firmware_id           = 1;
+  IslandActionStatuses island_action_status  = 2;
+  string               owner                 = 3;
+}
+
+message IslandFirmwareActionResponse {
+  string firmware_id = 1;
+}
+
+// Island Firmware Service
+service Island {
+  rpc UploadIslandFirmware(IslandUploadFirmwareRequest) returns (IslandUploadFirmwareResponse);
+  rpc GetIslandFirmwareFile(IslandGetFirmwareFileRequest) returns (IslandGetFirmwareFileResponse);
+  rpc GetIslandFirmware(IslandGetFirmwareRequest) returns (IslandGetFirmwareResponse);
+  rpc ShowIslandFirmwareList(IslandListFirmwareRequest) returns (IslandListFirmwareResponse);
+  rpc DeleteIslandFirmware(IslandDeleteFirmwareRequest) returns (IslandDeleteFirmwareResponse);
+  rpc AssignIslandFirmware(IslandAssignFirmwareRequest) returns (IslandAssignFirmwareResponse);
+  rpc ShowIslandAssignmentsList(IslandListAssignmentsRequest) returns (IslandListAssignmentsResponse);
+  rpc UpdateIslandFirmwareStatus(IslandFirmwareActionRequest) returns (IslandFirmwareActionResponse);
+}

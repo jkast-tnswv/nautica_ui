@@ -1,3 +1,3 @@
-export { SkipperBuilds } from './SkipperBuilds';
-export { SkipperService } from './service';
-export { default as skipperReducer, buildSkipperPackage } from './skipperSlice';
+export { SkipperBuilds } from './tabs/SkipperBuilds';
+export { SkipperService } from './services/service';
+export { default as skipperReducer, buildSkipperPackage } from './slices/skipperSlice';

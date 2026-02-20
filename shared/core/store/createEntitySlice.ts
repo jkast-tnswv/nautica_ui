@@ -49,7 +49,7 @@ export function createEntitySlice<
             state.loading = state.items.length === 0;
           })
           .addCase(fetchThunk.fulfilled, (state, action: PayloadAction<T[]>) => {
-            state.items = action.payload || [];
+            state.items = (action.payload || []) as any;
             state.loading = false;
             state.error = null;
           })
@@ -66,7 +66,7 @@ export function createEntitySlice<
             state.error = null;
           })
           .addCase(createThunk.fulfilled, (state, action: PayloadAction<T>) => {
-            state.items.push(action.payload);
+            state.items.push(action.payload as any);
             state.loading = false;
             state.error = null;
           })

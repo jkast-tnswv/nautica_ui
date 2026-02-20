@@ -69,6 +69,13 @@ static_resources:
                             max_stream_duration:
                               grpc_timeout_header_max: 30s
 
+                        - match: { prefix: "/island.Island/" }
+                          route:
+                            cluster: island_service
+                            timeout: 30s
+                            max_stream_duration:
+                              grpc_timeout_header_max: 30s
+
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                     typed_config:
@@ -193,3 +200,21 @@ static_resources:
               - endpoint:
                   address:
                     socket_address: { address: host.docker.internal, port_value: 65509 }
+
+    - name: island_service
+      connect_timeout: 5s
+      type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: {}
+      load_assignment:
+        cluster_name: island_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address: { address: host.docker.internal, port_value: 65503 }

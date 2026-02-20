@@ -22,6 +22,11 @@ services:
       - ./ledger/ui:/workspace/ledger/ui
       - ./captain/ui:/workspace/captain/ui
       - ./skipper/ui:/workspace/skipper/ui
+      - ./anchor/ui:/workspace/anchor/ui
+      - ./keel/ui:/workspace/keel/ui
+      - ./quartermaster/ui:/workspace/quartermaster/ui
+      - ./tidewatch/ui:/workspace/tidewatch/ui
+      - ./island/ui:/workspace/island/ui
       - /workspace/node_modules
       - /workspace/frontend/node_modules
     restart: unless-stopped

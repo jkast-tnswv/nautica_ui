@@ -1,5 +1,5 @@
-export { ShipwrightJobs } from './ShipwrightJobs';
-export { WorkflowViewer } from './WorkflowViewer';
-export { useShipwrightJobs, type UseShipwrightJobsOptions, type UseShipwrightJobsReturn } from './useShipwrightJobs';
-export { ShipwrightService } from './service';
-export { default as shipwrightJobsReducer, fetchShipwrightJobs, createShipwrightJob, fetchShipwrightJobDetails, clearJobDetails } from './shipwrightJobsSlice';
+export { ShipwrightJobs } from './tabs/ShipwrightJobs';
+export { WorkflowViewer } from './tabs/WorkflowViewer';
+export { useShipwrightJobs, type UseShipwrightJobsOptions, type UseShipwrightJobsReturn } from './hooks/useShipwrightJobs';
+export { ShipwrightService } from './services/service';
+export { default as shipwrightJobsReducer, fetchShipwrightJobs, createShipwrightJob, fetchShipwrightJobDetails, clearJobDetails } from './slices/shipwrightJobsSlice';

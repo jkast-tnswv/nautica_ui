@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
+import { Icon } from './Icon';
 
 type CloseButtonSize = 'sm' | 'md' | 'lg';
 type CloseButtonVariant = 'default' | 'subtle' | 'light';
@@ -61,9 +62,7 @@ export function CloseButton({
       style={{ ...baseStyles, ...variantStyles[variant], ...style }}
       {...props}
     >
-      <span className="material-icons-outlined" style={{ fontSize: iconSize }}>
-        close
-      </span>
+      <Icon name="close" size={iconSize} />
     </button>
   );
 }
