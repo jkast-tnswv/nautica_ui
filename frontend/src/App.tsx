@@ -28,6 +28,7 @@ import { DnsPage } from './components/DnsPage';
 import { AccessPage } from './components/AccessPage';
 import { DeployPage } from './components/DeployPage';
 import { InfraPage } from './components/InfraPage';
+import { TideWatchPage } from './components/TideWatchPage';
 import { LayoutProvider } from './context';
 function WaveLogo({ className }: { className?: string }) {
   return (
@@ -47,6 +48,7 @@ const PAGES: DropdownOption[] = [
   { id: 'devices', label: 'Ocean', icon: 'dns', description: 'Ocean devices and circuits' },
   { id: 'jobs', label: 'Shipwright & Harbor', icon: 'build', description: 'Shipwright provisioning & Harbor maintenance' },
   { id: 'deploy', label: 'Skipper', icon: 'rocket_launch', description: 'Skipper package builds and deployments' },
+  { id: 'tidewatch', label: 'TideWatch', icon: 'analytics', description: 'Resource statistics dashboard' },
 ];
 
 const LOADING_MESSAGES = [
@@ -259,6 +261,7 @@ function AppContent() {
           <Route path="/access" element={<AccessPage />} />
           <Route path="/deploy" element={<DeployPage />} />
           <Route path="/infra" element={<InfraPage />} />
+          <Route path="/tidewatch" element={<TideWatchPage />} />
           <Route path="/" element={<Navigate to="/devices" replace />} />
           <Route path="*" element={<Navigate to="/devices" replace />} />
         </Routes>

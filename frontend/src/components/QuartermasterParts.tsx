@@ -61,7 +61,7 @@ export function QuartermasterParts() {
 
   return (
     <Card
-      title="Part Categories"
+      title="Quartermaster"
       titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
     >
       <InfoSection open={showInfo}>

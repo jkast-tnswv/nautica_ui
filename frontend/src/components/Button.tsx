@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
-import { RefreshIcon } from './Icon';
+import { Icon, RefreshIcon } from './Icon';
 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -9,6 +9,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   children: ReactNode;
   isLoading?: boolean;
+  /** Material icon name rendered before children */
+  icon?: string;
 }
 
 export function Button({
@@ -18,6 +20,7 @@ export function Button({
   isLoading = false,
   disabled,
   className = '',
+  icon,
   ...props
 }: ButtonProps) {
   const baseClass = 'btn';
@@ -34,7 +37,7 @@ export function Button({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading ? <span className="btn-spinner" /> : children}
+      {isLoading ? <span className="btn-spinner" /> : <>{icon && <Icon name={icon} size={14} />}{children}</>}
     </button>
   );
 }

@@ -62,7 +62,7 @@ export function AnchorLocations() {
 
   return (
     <Card
-      title="Locations"
+      title="Anchor"
       titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
     >
       <InfoSection open={showInfo}>

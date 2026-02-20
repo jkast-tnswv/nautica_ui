@@ -61,4 +61,10 @@ export { useTelemetry } from './useTelemetry';
 // Auth
 export { useAuth, useAuthState, AuthProvider, type UseAuthReturn, type AuthUser } from './useAuth';
 
+export {
+  useEntityData,
+  type UseEntityDataOptions,
+  type UseEntityDataReturn,
+} from './useEntityData';
+
 // Service-specific hooks are now in @twcode/{service}-ui packages

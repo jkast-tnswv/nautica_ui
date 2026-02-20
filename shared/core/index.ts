@@ -108,10 +108,13 @@ export {
   AuthProvider,
   type UseAuthReturn,
   type AuthUser,
+  useEntityData,
+  type UseEntityDataOptions,
+  type UseEntityDataReturn,
 } from './hooks';
 
 // Store
-export { store, type RootState, type AppDispatch, useAppDispatch, useAppSelector } from './store';
+export { store, type RootState, type AppDispatch, useAppDispatch, useAppSelector, createEntitySlice, type EntityState } from './store';
 
 // Theme
 export {

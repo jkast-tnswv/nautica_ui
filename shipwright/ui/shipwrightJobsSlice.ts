@@ -15,6 +15,7 @@ interface ShipwrightJobsState {
   loading: boolean;
   error: string | null;
   selectedJobDetails: ShipwrightJobDetailsResponse | null;
+  detailsJobId: string | null;
   detailsLoading: boolean;
   detailsError: string | null;
 }
@@ -24,6 +25,7 @@ const initialState: ShipwrightJobsState = {
   loading: false,
   error: null,
   selectedJobDetails: null,
+  detailsJobId: null,
   detailsLoading: false,
   detailsError: null,
 };
@@ -81,7 +83,8 @@ const shipwrightJobsSlice = createSlice({
         state.error = action.error.message ?? 'Failed to create job';
       })
       // Job details
-      .addCase(fetchShipwrightJobDetails.pending, (state) => {
+      .addCase(fetchShipwrightJobDetails.pending, (state, action) => {
+        state.detailsJobId = action.meta.arg;
         state.detailsLoading = true;
         state.detailsError = null;
       })

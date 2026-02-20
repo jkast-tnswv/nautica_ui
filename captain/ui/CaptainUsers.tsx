@@ -56,7 +56,7 @@ export function CaptainUsers() {
 
   return (
     <Card
-      title="Users"
+      title="Captain"
       titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
       headerAction={
         <button className="btn btn-sm btn-primary" onClick={() => setShowCreateDialog(true)}>

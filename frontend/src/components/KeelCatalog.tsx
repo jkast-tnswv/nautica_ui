@@ -65,7 +65,7 @@ export function KeelCatalog() {
 
   return (
     <Card
-      title="Hardware Catalog"
+      title="Keel"
       titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
     >
       <InfoSection open={showInfo}>

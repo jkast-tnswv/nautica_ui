@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-import { SideTabs } from './index';
+import { TabbedPage } from './TabbedPage';
 import { ShipwrightJobs } from '@twcode/shipwright-ui';
 import { HarborJobs } from '@twcode/harbor-ui';
 
 const tabs = [
-  { id: 'shipwright', label: 'Shipwright', icon: 'build' },
-  { id: 'harbor', label: 'Harbor', icon: 'anchor' },
+  { id: 'shipwright', label: 'Shipwright', icon: 'build', component: ShipwrightJobs },
+  { id: 'harbor', label: 'Harbor', icon: 'anchor', component: HarborJobs },
 ];
 
 export function JobsPage() {
-  const [activeTab, setActiveTab] = useState('shipwright');
-
-  return (
-    <SideTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab}>
-      {activeTab === 'shipwright' && <ShipwrightJobs />}
-      {activeTab === 'harbor' && <HarborJobs />}
-    </SideTabs>
-  );
+  return <TabbedPage tabs={tabs} />;
 }

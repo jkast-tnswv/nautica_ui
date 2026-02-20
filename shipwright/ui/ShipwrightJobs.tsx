@@ -1,4 +1,4 @@
-import React, { useMemo, useState, type FormEvent } from 'react';
+import React, { useMemo, useState, useCallback, type FormEvent } from 'react';
 import { useShipwrightJobs } from './useShipwrightJobs';
 import { Table, Cell, SelectField, FormField, FormDialog, Card, InfoSection } from '@components';
 import type { ShipwrightJobResponse } from '@core/gen/shipwright/api/shipwright_pb';
@@ -20,9 +20,10 @@ const jobTypeOptions = [
 export function ShipwrightJobs() {
   const {
     jobs, loading, error, refresh,
-    createJob, selectedJobDetails, detailsLoading, detailsError, loadJobDetails, clearDetails,
+    createJob, selectedJobDetails, detailsJobId, detailsLoading, detailsError, loadJobDetails, clearDetails,
   } = useShipwrightJobs();
 
+  const [expandedKeys, setExpandedKeys] = useState<Set<string | number>>(new Set());
   const [showInfo, setShowInfo] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -50,6 +51,10 @@ export function ShipwrightJobs() {
       setFormData({ hostname: '', jobType: String(ShipwrightJobTypes.SHIPWRIGHT_JOB_TYPE_CONFIGURE), owner: '' });
     }
   };
+
+  const handleExpandedKeysChange = useCallback((keys: Set<string | number>) => {
+    setExpandedKeys(keys);
+  }, []);
 
   const columns = useMemo(() => [
     {
@@ -128,12 +133,14 @@ export function ShipwrightJobs() {
         paginate
         pageSize={25}
         tableId="shipwright-jobs"
+        expandedKeys={expandedKeys}
+        onExpandedKeysChange={handleExpandedKeysChange}
         onRowClick={(j) => loadJobDetails(j.jobId)}
         renderExpandedRow={(j) => {
-          if (detailsError) {
+          if (detailsError && detailsJobId === j.jobId) {
             return <div style={{ padding: '16px', color: 'var(--color-error)' }}>Failed to load details: {detailsError}</div>;
           }
-          if (detailsLoading || !selectedJobDetails || selectedJobDetails.jobId !== j.jobId) {
+          if (detailsLoading || !selectedJobDetails || detailsJobId !== j.jobId) {
             return <div style={{ padding: '16px', color: 'var(--color-text-secondary)' }}>Loading workflow details...</div>;
           }
           return <WorkflowViewer details={selectedJobDetails} loading={false} />;

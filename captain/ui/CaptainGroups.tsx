@@ -40,7 +40,7 @@ export function CaptainGroups() {
       searchable: true,
     },
     {
-      header: 'Users',
+      header: 'Captain',
       accessor: (g: CaptainGroup) => g.captainUsers.length,
       width: '80px',
     },

@@ -42,7 +42,7 @@ export function LedgerSearch() {
 
   return (
     <Card
-      title="DNS Search"
+      title="Leger Lookup"
       titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
       headerAction={
         <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>

@@ -158,6 +158,10 @@ export interface TableProps<T> {
   selectedKeys?: Set<string | number>;
   /** Called when selection changes */
   onSelectionChange?: (selectedKeys: Set<string | number>) => void;
+  /** Controlled expanded row keys (overrides internal state) */
+  expandedKeys?: Set<string | number>;
+  /** Called when expanded keys change */
+  onExpandedKeysChange?: (expandedKeys: Set<string | number>) => void;
 }
 
 /**
@@ -282,9 +286,13 @@ export function Table<T>({
   selectable = false,
   selectedKeys,
   onSelectionChange,
+  expandedKeys: controlledExpandedKeys,
+  onExpandedKeysChange,
 }: TableProps<T>) {
   const { confirm, ConfirmDialogRenderer } = useConfirm();
-  const [expandedKeys, setExpandedKeys] = useState<Set<string | number>>(new Set());
+  const [internalExpandedKeys, setInternalExpandedKeys] = useState<Set<string | number>>(new Set());
+  const expandedKeys = controlledExpandedKeys ?? internalExpandedKeys;
+  const setExpandedKeys = onExpandedKeysChange ?? setInternalExpandedKeys;
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [bulkRunning, setBulkRunning] = useState(false);
@@ -325,7 +333,7 @@ export function Table<T>({
       }
       return next;
     });
-  }, []);
+  }, [setExpandedKeys]);
 
   // Build default getSearchText from searchable columns
   const getSearchText = useMemo(() => {

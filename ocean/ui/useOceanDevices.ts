@@ -1,15 +1,11 @@
-import { useEffect, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '@core/store/hooks';
+import { useEntityData, type UseEntityDataOptions } from '@core/hooks/useEntityData';
 import { fetchOceanDevices } from './oceanDevicesSlice';
 import type { OceanDevice } from '@core/gen/ocean/api/ocean_pb';
 import type { PartialMessage } from '@bufbuild/protobuf';
 import type { OceanDeviceListRequest } from '@core/gen/ocean/api/ocean_pb';
+import type { RootState } from '@core/store';
 
-export interface UseOceanDevicesOptions {
-  autoRefresh?: boolean;
-  refreshInterval?: number;
-  filters?: PartialMessage<OceanDeviceListRequest>;
-}
+export type UseOceanDevicesOptions = UseEntityDataOptions<PartialMessage<OceanDeviceListRequest> | undefined>;
 
 export interface UseOceanDevicesReturn {
   devices: OceanDevice[];
@@ -19,25 +15,10 @@ export interface UseOceanDevicesReturn {
 }
 
 export function useOceanDevices(options: UseOceanDevicesOptions = {}): UseOceanDevicesReturn {
-  const { autoRefresh = true, refreshInterval = 10000, filters } = options;
-  const dispatch = useAppDispatch();
-  const { items: devices, loading, error } = useAppSelector((state) => state.oceanDevices);
-
-  useEffect(() => {
-    dispatch(fetchOceanDevices(filters));
-  }, [dispatch, filters]);
-
-  useEffect(() => {
-    if (!autoRefresh) return;
-    const interval = setInterval(() => {
-      dispatch(fetchOceanDevices(filters));
-    }, refreshInterval);
-    return () => clearInterval(interval);
-  }, [autoRefresh, refreshInterval, dispatch, filters]);
-
-  const refresh = useCallback(async () => {
-    await dispatch(fetchOceanDevices(filters));
-  }, [dispatch, filters]);
-
-  return { devices, loading, error, refresh };
+  const { data: devices, ...rest } = useEntityData(
+    fetchOceanDevices,
+    (state: RootState) => state.oceanDevices,
+    options,
+  );
+  return { devices, ...rest };
 }
