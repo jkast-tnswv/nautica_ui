@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package captain;
+
+enum CaptainPermissionTypes {
+  CAPTAIN_PERMISSION_TYPE_UNSPECIFIED = 0;
+  CAPTAIN_PERMISSION_TYPE_READ        = 1;
+  CAPTAIN_PERMISSION_TYPE_WRITE       = 2;
+  CAPTAIN_PERMISSION_TYPE_EXECUTE     = 3;
+}
+
+message CaptainUser {
+  string user_id    = 1;
+  string username   = 2;
+  string first_name = 3;
+  string last_name  = 4;
+}
+
+message CaptainCreateUserRequest {
+  string username   = 1;
+  string first_name = 2;
+  string last_name  = 3;
+}
+
+message CaptainGroup {
+  string                group_id       = 1;
+  string                group_name     = 2;
+  repeated CaptainUser  captain_users  = 3;
+  repeated CaptainGroup captain_groups = 4;
+}
+
+message CaptainCreateGroupRequest {
+  string group_name = 1;
+}
+
+message CaptainServiceAccount {
+  string service_account_id   = 1;
+  string service_account_name = 2;
+}
+
+// Captain Service
+service Captain {
+  // Create a new CaptainUser
+  rpc CreateCaptainUser(CaptainCreateUserRequest) returns (CaptainUser);
+  // Create a new CaptainGroup
+  rpc CreateCaptainGroup(CaptainCreateGroupRequest) returns (CaptainGroup);
+}

@@ -9,6 +9,9 @@ COPY shared/core/package.json ./shared/core/
 COPY ocean/ui/package.json ./ocean/ui/
 COPY shipwright/ui/package.json ./shipwright/ui/
 COPY harbor/ui/package.json ./harbor/ui/
+COPY ledger/ui/package.json ./ledger/ui/
+COPY captain/ui/package.json ./captain/ui/
+COPY skipper/ui/package.json ./skipper/ui/
 
 RUN npm install --workspace=frontend
 

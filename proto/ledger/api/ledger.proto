@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package ledger;
+
+message LedgerIpv4AddressString {
+  string address = 1;
+}
+
+message LedgerIpv4AddressBytes {
+  bytes address = 1;
+}
+
+message LedgerIpv4AddressOctets {
+  uint32 octet1 = 1;
+  uint32 octet2 = 2;
+  uint32 octet3 = 3;
+  uint32 octet4 = 4;
+}
+
+message LedgerIpv4Address {
+  oneof ipv4_address {
+    LedgerIpv4AddressString ipv4_address_string = 1;
+    LedgerIpv4AddressBytes  ipv4_address_bytes  = 2;
+    LedgerIpv4AddressOctets ipv4_address_octets = 3;
+  }
+}
+
+message LedgerIpv6AddressString {
+  string address = 1;
+}
+
+message LedgerIpv6AddressBytes {
+  bytes address = 1;
+}
+
+message LedgerIpv6AddressHextets {
+  string hextet1 = 1;
+  string hextet2 = 2;
+  string hextet3 = 3;
+  string hextet4 = 4;
+  string hextet5 = 5;
+  string hextet6 = 6;
+  string hextet7 = 7;
+  string hextet8 = 8;
+}
+
+message LedgerIpv6Address {
+  oneof ipv6_address {
+    LedgerIpv6AddressString  ipv6_address_string  = 1;
+    LedgerIpv6AddressBytes   ipv6_address_bytes   = 2;
+    LedgerIpv6AddressHextets ipv6_address_hextets = 3;
+  }
+}
+
+message LedgerSubnet {
+  oneof ledger_address {
+    LedgerIpv4Address ledger_ipv4_address = 1;
+    LedgerIpv6Address ledger_ipv6_address = 2;
+  }
+  uint32 prefix_length = 3;
+}
+
+enum LedgerDnsRecordTypes {
+  LEDGER_DNS_RECORD_TYPE_UNSPECIFIED = 0;
+  LEDGER_DNS_RECORD_TYPE_A           = 1;
+  LEDGER_DNS_RECORD_TYPE_NS          = 2;
+  LEDGER_DNS_RECORD_TYPE_CNAME       = 5;
+  LEDGER_DNS_RECORD_TYPE_SOA         = 6;
+  LEDGER_DNS_RECORD_TYPE_PTR         = 12;
+  LEDGER_DNS_RECORD_TYPE_HINFO       = 13;
+  LEDGER_DNS_RECORD_TYPE_MX          = 15;
+  LEDGER_DNS_RECORD_TYPE_TXT         = 16;
+  LEDGER_DNS_RECORD_TYPE_RP          = 17;
+  LEDGER_DNS_RECORD_TYPE_AFSDB       = 18;
+  LEDGER_DNS_RECORD_TYPE_SIG         = 24;
+  LEDGER_DNS_RECORD_TYPE_KEY         = 25;
+  LEDGER_DNS_RECORD_TYPE_AAAA        = 28;
+  LEDGER_DNS_RECORD_TYPE_LOC         = 29;
+  LEDGER_DNS_RECORD_TYPE_SRV         = 33;
+  LEDGER_DNS_RECORD_TYPE_NAPTR       = 35;
+  LEDGER_DNS_RECORD_TYPE_KX          = 36;
+  LEDGER_DNS_RECORD_TYPE_CERT        = 37;
+  LEDGER_DNS_RECORD_TYPE_DNAME       = 39;
+  LEDGER_DNS_RECORD_TYPE_OPT         = 41;
+  LEDGER_DNS_RECORD_TYPE_APL         = 42;
+  LEDGER_DNS_RECORD_TYPE_DS          = 43;
+  LEDGER_DNS_RECORD_TYPE_SSHFP       = 44;
+  LEDGER_DNS_RECORD_TYPE_IPSECKEY    = 45;
+  LEDGER_DNS_RECORD_TYPE_RRSIG       = 46;
+  LEDGER_DNS_RECORD_TYPE_NSEC        = 47;
+  LEDGER_DNS_RECORD_TYPE_DNSKEY      = 48;
+  LEDGER_DNS_RECORD_TYPE_DHCID       = 49;
+  LEDGER_DNS_RECORD_TYPE_NSEC3       = 50;
+  LEDGER_DNS_RECORD_TYPE_NSEC3PARAM  = 51;
+  LEDGER_DNS_RECORD_TYPE_TLSA        = 52;
+  LEDGER_DNS_RECORD_TYPE_SMIMEA      = 53;
+  LEDGER_DNS_RECORD_TYPE_HIP         = 55;
+  LEDGER_DNS_RECORD_TYPE_CDS         = 59;
+  LEDGER_DNS_RECORD_TYPE_CDNSKEY     = 60;
+  LEDGER_DNS_RECORD_TYPE_OPENPGPKEY  = 61;
+  LEDGER_DNS_RECORD_TYPE_CSYNC       = 62;
+  LEDGER_DNS_RECORD_TYPE_ZONEMD      = 63;
+  LEDGER_DNS_RECORD_TYPE_SVCB        = 64;
+  LEDGER_DNS_RECORD_TYPE_HTTPS       = 65;
+  LEDGER_DNS_RECORD_TYPE_EUI48       = 108;
+  LEDGER_DNS_RECORD_TYPE_EUI64       = 109;
+  LEDGER_DNS_RECORD_TYPE_TKEY        = 249;
+  LEDGER_DNS_RECORD_TYPE_TSIG        = 250;
+  LEDGER_DNS_RECORD_TYPE_IXFR        = 251;
+  LEDGER_DNS_RECORD_TYPE_AXFR        = 252;
+  LEDGER_DNS_RECORD_TYPE_URI         = 256;
+  LEDGER_DNS_RECORD_TYPE_CAA         = 257;
+  LEDGER_DNS_RECORD_TYPE_TA          = 32768;
+  LEDGER_DNS_RECORD_TYPE_DLV         = 32769;
+}
+
+message LedgerDnsRecord {
+  string               name                   = 1;
+  LedgerDnsRecordTypes ledger_dns_record_type = 2;
+  string               value                  = 3;
+}
+
+message LedgerSearchRequest {
+  oneof target {
+    string            name         = 1;
+    LedgerIpv4Address ipv4_address = 2;
+    LedgerIpv6Address ipv6_address = 3;
+  }
+}
+
+message LedgerSearchResponse {
+  repeated LedgerDnsRecord ledger_dns_records = 1;
+}
+
+// Ledger Service
+service Ledger {
+  // Search for records in the ledger
+  rpc Search (LedgerSearchRequest) returns (LedgerSearchResponse);
+}

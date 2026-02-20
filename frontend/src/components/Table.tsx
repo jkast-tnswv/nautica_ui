@@ -718,7 +718,11 @@ export function Table<T>({
               const totalCols = columns.length + (hasActions ? 1 : 0) + (selectionEnabled ? 1 : 0);
 
               const handleRowClick = isExpandable
-                ? () => toggleExpand(key)
+                ? () => {
+                    const willExpand = !expandedKeys.has(key);
+                    toggleExpand(key);
+                    if (willExpand && onRowClick) onRowClick(row);
+                  }
                 : onRowClick
                   ? () => onRowClick(row)
                   : undefined;

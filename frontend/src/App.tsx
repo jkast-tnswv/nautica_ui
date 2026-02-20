@@ -24,14 +24,29 @@ import type { DropdownOption } from './components';
 import { LoginPage } from './components/LoginPage';
 import { DevicesPage } from './components/DevicesPage';
 import { JobsPage } from './components/JobsPage';
+import { DnsPage } from './components/DnsPage';
+import { AccessPage } from './components/AccessPage';
+import { DeployPage } from './components/DeployPage';
+import { InfraPage } from './components/InfraPage';
 import { LayoutProvider } from './context';
-import waveIconCyan from '@core/assets/Wave Icon - TensorWave Logo- Cyan.svg';
+function WaveLogo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 2200 2200" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M2000,1317.4V2000h-214.2C804,2000,1434.6,882.6,452.9,882.6v0.5H200V200h252.9
+        c981.7,0,351.2,1117.4,1332.9,1117.4H2000z"/>
+    </svg>
+  );
+}
 
 declare const __COMMIT_HASH__: string;
 
 const PAGES: DropdownOption[] = [
-  { id: 'devices', label: 'Devices', icon: 'dns', description: 'Ocean devices and circuits' },
-  { id: 'jobs', label: 'Jobs', icon: 'build', description: 'Shipwright provisioning & Harbor maintenance' },
+  { id: 'infra', label: 'Anchor & Keel', icon: 'domain', description: 'Anchor locations and Keel hardware catalog' },
+  { id: 'access', label: 'Captain', icon: 'admin_panel_settings', description: 'Captain users and groups' },
+  { id: 'dns', label: 'Ledger', icon: 'travel_explore', description: 'Ledger DNS record search' },
+  { id: 'devices', label: 'Ocean', icon: 'dns', description: 'Ocean devices and circuits' },
+  { id: 'jobs', label: 'Shipwright & Harbor', icon: 'build', description: 'Shipwright provisioning & Harbor maintenance' },
+  { id: 'deploy', label: 'Skipper', icon: 'rocket_launch', description: 'Skipper package builds and deployments' },
 ];
 
 const LOADING_MESSAGES = [
@@ -187,7 +202,7 @@ function AppContent() {
         <div className="header-content">
           <div className="header-left">
             <div className="header-logo">
-              <img src={waveIconCyan} alt="Nautica" className="header-logo-img" />
+              <WaveLogo className="header-logo-img" />
               <span className="header-title">Nautica</span>
             </div>
             <span className="header-meta" style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
@@ -229,7 +244,7 @@ function AppContent() {
               icon="menu"
               className="header-nav"
               triggerClassName="header-control header-control-dropdown"
-              columnRows={5}
+              columnRows={4}
               searchable
             />
           </div>
@@ -240,6 +255,10 @@ function AppContent() {
         <Routes>
           <Route path="/devices" element={<DevicesPage />} />
           <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/dns" element={<DnsPage />} />
+          <Route path="/access" element={<AccessPage />} />
+          <Route path="/deploy" element={<DeployPage />} />
+          <Route path="/infra" element={<InfraPage />} />
           <Route path="/" element={<Navigate to="/devices" replace />} />
           <Route path="*" element={<Navigate to="/devices" replace />} />
         </Routes>

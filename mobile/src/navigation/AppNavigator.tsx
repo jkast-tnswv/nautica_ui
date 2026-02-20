@@ -169,9 +169,9 @@ function ConfigStack() {
         options={{ title: 'Actions' }}
       />
       <ConfigStackNav.Screen
-        name="Jobs"
+        name="Shipwright & Harbor"
         component={JobsScreen}
-        options={{ title: 'Jobs' }}
+        options={{ title: 'Shipwright & Harbor' }}
       />
       <ConfigStackNav.Screen
         name="Ipam"

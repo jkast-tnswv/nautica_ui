@@ -16,6 +16,7 @@ interface ShipwrightJobsState {
   error: string | null;
   selectedJobDetails: ShipwrightJobDetailsResponse | null;
   detailsLoading: boolean;
+  detailsError: string | null;
 }
 
 const initialState: ShipwrightJobsState = {
@@ -24,6 +25,7 @@ const initialState: ShipwrightJobsState = {
   error: null,
   selectedJobDetails: null,
   detailsLoading: false,
+  detailsError: null,
 };
 
 export const fetchShipwrightJobs = createAsyncThunk(
@@ -69,7 +71,10 @@ const shipwrightJobsSlice = createSlice({
       })
       .addCase(fetchShipwrightJobs.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ?? 'Failed to load jobs';
+        // Only set error if we have no existing data — don't nuke the UI on a transient refresh failure
+        if (state.items.length === 0) {
+          state.error = action.error.message ?? 'Failed to load jobs';
+        }
       })
       // Create job (re-fetch after success handled by hook)
       .addCase(createShipwrightJob.rejected, (state, action) => {
@@ -78,6 +83,7 @@ const shipwrightJobsSlice = createSlice({
       // Job details
       .addCase(fetchShipwrightJobDetails.pending, (state) => {
         state.detailsLoading = true;
+        state.detailsError = null;
       })
       .addCase(fetchShipwrightJobDetails.fulfilled, (state, action) => {
         state.selectedJobDetails = action.payload;
@@ -85,7 +91,7 @@ const shipwrightJobsSlice = createSlice({
       })
       .addCase(fetchShipwrightJobDetails.rejected, (state, action) => {
         state.detailsLoading = false;
-        state.error = action.error.message ?? 'Failed to load job details';
+        state.detailsError = action.error.message ?? 'Failed to load job details';
       });
   },
 });

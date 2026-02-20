@@ -9,48 +9,48 @@
   --layout-dialog-wide-width: 700px;
 }
 
-/* Dark Theme (default) — primary-pitch bg, primary-cyan + primary-white elements */
+/* Dark Theme (default) — TensorWave-inspired deep blue-black with cyan accents */
 :root,
 [data-theme="dark"] {
-  /* Primary Colors */
-  --color-bg-primary: #000808;
-  --color-bg-secondary: #000E10;
-  --color-bg-card: #001418;
-  --color-bg-hover: #001C20;
+  /* Primary Colors — deep blue-black like tensorwave.com */
+  --color-bg-primary: #020A0E;
+  --color-bg-secondary: #04111A;
+  --color-bg-card: #061822;
+  --color-bg-hover: #0A2030;
 
-  /* Accent Colors — primary-cyan */
+  /* Accent Colors — TensorWave cyan/teal */
   --color-accent-blue: #0CE2F2;
   --color-accent-cyan: #0CE2F2;
-  --color-accent-teal: #00A0B0;
+  --color-accent-teal: #00B4C8;
   --color-accent-purple: #0A52F2;
 
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #0CE2F2 0%, #00A0B0 100%);
-  --gradient-accent: linear-gradient(135deg, #00A0B0 0%, #0CE2F2 100%);
+  /* Gradients — TensorWave-style cyan-to-teal */
+  --gradient-primary: linear-gradient(135deg, #0CE2F2 0%, #00B4C8 50%, #0090A0 100%);
+  --gradient-accent: linear-gradient(135deg, #00B4C8 0%, #0CE2F2 100%);
   --gradient-purple: linear-gradient(135deg, #0A52F2 0%, #0CE2F2 100%);
 
-  /* Text Colors — primary-white */
-  --color-text-primary: #E6E6E6;
-  --color-text-secondary: #8AACAC;
-  --color-text-muted: #456060;
+  /* Text Colors */
+  --color-text-primary: #ECF0F1;
+  --color-text-secondary: #7BA8B8;
+  --color-text-muted: #3D5A68;
 
   /* Border Colors */
-  --color-border: #002828;
-  --color-border-hover: #003C3C;
+  --color-border: #0C2A38;
+  --color-border-hover: #144050;
 
   /* Status Colors */
   --color-success: #12F25D;
-  --color-success-bg: rgba(18, 242, 93, 0.15);
+  --color-success-bg: rgba(18, 242, 93, 0.12);
   --color-error: #F25829;
-  --color-error-bg: rgba(242, 88, 41, 0.15);
+  --color-error-bg: rgba(242, 88, 41, 0.12);
   --color-warning: #C0F20A;
-  --color-warning-bg: rgba(192, 242, 10, 0.15);
+  --color-warning-bg: rgba(192, 242, 10, 0.12);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 20px rgba(12, 226, 242, 0.25);
+  /* Shadows — stronger glow effects */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 24px rgba(12, 226, 242, 0.2);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -556,6 +556,7 @@ header {
 .header-logo-img {
   height: 28px;
   width: auto;
+  color: var(--color-accent-cyan);
 }
 
 .header-title {
@@ -784,6 +785,9 @@ header h1 {
 }
 
 .card-header-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-shrink: 0;
 }
 

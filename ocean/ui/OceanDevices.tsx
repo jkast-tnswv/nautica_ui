@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useOceanDevices } from './useOceanDevices';
-import { Table, Cell, SelectField, ActionBar } from '@components';
+import { Table, Cell, SelectField, Card, InfoSection } from '@components';
 import type { OceanDevice } from '@core/gen/ocean/api/ocean_pb';
 import { OceanDeviceStatuses, OceanDeviceStates } from '@core/gen/ocean/api/ocean_pb';
 import {
@@ -27,6 +27,7 @@ const stateOptions = [
 
 export function OceanDevices() {
   const { devices, loading, error, refresh } = useOceanDevices();
+  const [showInfo, setShowInfo] = useState(false);
   const [statusFilter, setStatusFilter] = useState('');
   const [stateFilter, setStateFilter] = useState('');
   const [modelFilter, setModelFilter] = useState('');
@@ -90,31 +91,39 @@ export function OceanDevices() {
   }
 
   return (
-    <div>
-      <ActionBar>
-        <SelectField
-          name="status"
-          value={statusFilter}
-          options={statusOptions}
-          onChange={(e) => setStatusFilter(e.target.value)}
-        />
-        <SelectField
-          name="state"
-          value={stateFilter}
-          options={stateOptions}
-          onChange={(e) => setStateFilter(e.target.value)}
-        />
-        <SelectField
-          name="model"
-          value={modelFilter}
-          options={modelOptions}
-          onChange={(e) => setModelFilter(e.target.value)}
-        />
-        <button className="btn btn-secondary" onClick={refresh}>
-          <span className="material-icons-outlined">refresh</span>
-          Refresh
-        </button>
-      </ActionBar>
+    <Card
+      title="Devices"
+      titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
+      headerAction={
+        <>
+          <SelectField
+            name="status"
+            value={statusFilter}
+            options={statusOptions}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          />
+          <SelectField
+            name="state"
+            value={stateFilter}
+            options={stateOptions}
+            onChange={(e) => setStateFilter(e.target.value)}
+          />
+          <SelectField
+            name="model"
+            value={modelFilter}
+            options={modelOptions}
+            onChange={(e) => setModelFilter(e.target.value)}
+          />
+          <button className="btn btn-sm btn-secondary" onClick={refresh}>
+            <span className="material-icons-outlined">refresh</span>
+            Refresh
+          </button>
+        </>
+      }
+    >
+      <InfoSection open={showInfo}>
+        <p>Ocean devices represent network switches, routers, and other infrastructure managed by Ocean. Filter by status, state, or chassis model to find specific devices.</p>
+      </InfoSection>
       <Table
         data={filteredDevices}
         columns={columns}
@@ -126,6 +135,6 @@ export function OceanDevices() {
         pageSize={25}
         tableId="ocean-devices"
       />
-    </div>
+    </Card>
   );
 }

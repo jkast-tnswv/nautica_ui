@@ -11,7 +11,7 @@ import { Cell } from '@components';
 interface WorkflowViewerProps {
   details: ShipwrightJobDetailsResponse;
   loading: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const variantColors: Record<string, string> = {

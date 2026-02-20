@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package quartermaster;
+
+enum PartCategories {
+  PART_CATEGORY_UNSPECIFIED          = 0;
+  PART_CATEGORY_RACK                 = 1;
+  PART_CATEGORY_RACK_DOOR            = 2;
+  PART_CATEGORY_RACK_DOOR_CONTROLLER = 3;
+  PART_CATEGORY_LADDER_RACK          = 4;
+  PART_CATEGORY_CABLE_TRAY           = 5;
+  PART_CATEGORY_CDU                  = 6;
+  PART_CATEGORY_CDU_CONTROLLER       = 7;
+  PART_CATEGORY_CDU_PUMP             = 8;
+  PART_CATEGORY_CDU_MANIFOLD         = 9;
+  PART_CATEGORY_CDU_HOSE             = 10;
+  PART_CATEGORY_PDU                  = 11;
+  PART_CATEGORY_PDU_CONTROLLER       = 12;
+  PART_CATEGORY_MOUNTING_BRACKET     = 13;
+  PART_CATEGORY_POWER_CORD           = 14;
+  PART_CATEGORY_UPS                  = 15;
+  PART_CATEGORY_GENERATOR            = 16;
+  PART_CATEGORY_CHASSIS              = 17;
+  PART_CATEGORY_BLADE                = 18;
+  PART_CATEGORY_MOTHERBOARD          = 19;
+  PART_CATEGORY_CPU                  = 20;
+  PART_CATEGORY_RAM                  = 21;
+  PART_CATEGORY_HDD                  = 22;
+  PART_CATEGORY_SSD                  = 23;
+  PART_CATEGORY_GPU                  = 24;
+  PART_CATEGORY_NIC                  = 25;
+  PART_CAEGORY_PSU                   = 26;
+  PART_CATEGORY_FAN                  = 27;
+  PART_CATEGORY_FAN_TRAY             = 28;
+  PART_CATEGORY_WATER_BLOCK          = 29;
+  PART_CATEGORY_NETWORK_SWITCH       = 30;
+  PART_CATEGORY_NETWORK_ROUTER       = 31;
+  PART_CATEGORY_NETWORK_GATEWAY      = 32;
+  PART_CATEGORY_SUPERVISOR           = 33;
+  PART_CATEGORY_LINECARD             = 34;
+  PART_CATEGORY_FABRIC_MODULE        = 35;
+  PART_CATEGORY_OPTICAL_TRANSCEIVER  = 36;
+  PART_CATEGORY_RAIL_KIT             = 37;
+  PART_CATEGORY_COPPER_JUMPER_CABLE  = 38;
+  PART_CATEGORY_COPPER_PATCH_PANEL   = 39;
+  PART_CATEGORY_FIBER_JUMPER_CABLE   = 40;
+  PART_CATEGORY_FIBER_BREAKOUT_CABLE = 41;
+  PART_CATEGORY_FIBER_TRUNK          = 42;
+  PART_CATEGORY_FIBER_CASSETTE       = 43;
+  PART_CATEGORY_FIBER_PATCH_PANEL    = 44;
+}
+
+// TWPN
+message TensorWavePartNumber {
+  PartCategories part_category = 1;
+  uint32         part_number   = 2;
+}
+
+// // Quartermaster Service
+// service Quartermaster {
+//   // Foorbar
+// }

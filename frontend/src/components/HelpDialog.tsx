@@ -59,13 +59,13 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    title: 'Jobs',
+    title: 'Shipwright & Harbor',
     icon: 'build',
     page: 'jobs',
     content: (
       <>
         <p>
-          The Jobs page combines Shipwright provisioning workflows and Harbor maintenance operations.
+          The Shipwright & Harbor page combines Shipwright provisioning workflows and Harbor maintenance operations.
         </p>
         <div className="help-tour-tips">
           <h4>Shipwright Jobs</h4>

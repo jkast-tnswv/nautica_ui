@@ -48,6 +48,27 @@ static_resources:
                             max_stream_duration:
                               grpc_timeout_header_max: 30s
 
+                        - match: { prefix: "/ledger.Ledger/" }
+                          route:
+                            cluster: ledger_service
+                            timeout: 30s
+                            max_stream_duration:
+                              grpc_timeout_header_max: 30s
+
+                        - match: { prefix: "/captain.Captain/" }
+                          route:
+                            cluster: captain_service
+                            timeout: 30s
+                            max_stream_duration:
+                              grpc_timeout_header_max: 30s
+
+                        - match: { prefix: "/skipper.Skipper/" }
+                          route:
+                            cluster: skipper_service
+                            timeout: 30s
+                            max_stream_duration:
+                              grpc_timeout_header_max: 30s
+
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                     typed_config:
@@ -68,6 +89,7 @@ static_resources:
     - name: shipwright_service
       connect_timeout: 5s
       type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
       lb_policy: ROUND_ROBIN
       typed_extension_protocol_options:
         envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
@@ -85,6 +107,7 @@ static_resources:
     - name: harbor_service
       connect_timeout: 5s
       type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
       lb_policy: ROUND_ROBIN
       typed_extension_protocol_options:
         envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
@@ -102,6 +125,7 @@ static_resources:
     - name: ocean_service
       connect_timeout: 5s
       type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
       lb_policy: ROUND_ROBIN
       typed_extension_protocol_options:
         envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
@@ -115,3 +139,57 @@ static_resources:
               - endpoint:
                   address:
                     socket_address: { address: host.docker.internal, port_value: 65505 }
+
+    - name: ledger_service
+      connect_timeout: 5s
+      type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: {}
+      load_assignment:
+        cluster_name: ledger_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address: { address: host.docker.internal, port_value: 65507 }
+
+    - name: captain_service
+      connect_timeout: 5s
+      type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: {}
+      load_assignment:
+        cluster_name: captain_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address: { address: host.docker.internal, port_value: 65508 }
+
+    - name: skipper_service
+      connect_timeout: 5s
+      type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: {}
+      load_assignment:
+        cluster_name: skipper_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address: { address: host.docker.internal, port_value: 65509 }

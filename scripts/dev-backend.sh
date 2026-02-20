@@ -89,7 +89,7 @@ PIDS=()
 cleanup() {
   echo ""
   echo -e "${YELLOW}Shutting down all services...${NC}"
-  for pid in "${PIDS[@]}"; do
+  for pid in "${PIDS[@]+"${PIDS[@]}"}"; do
     kill "$pid" 2>/dev/null || true
   done
   wait 2>/dev/null
@@ -143,9 +143,8 @@ main() {
   echo -e "Press ${BOLD}Ctrl+C${NC} to stop all services."
   echo ""
 
-  # Wait for any child to exit (indicates a crash)
-  wait -n 2>/dev/null || true
-  echo -e "${RED}A service exited unexpectedly. Shutting down...${NC}"
+  # Wait for all children — Ctrl+C triggers cleanup via trap
+  wait
 }
 
 main "$@"

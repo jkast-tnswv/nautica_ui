@@ -25,10 +25,16 @@
       "@twcode/shipwright-ui/*": ["../shipwright/ui/*"],
       "@twcode/harbor-ui": ["../harbor/ui"],
       "@twcode/harbor-ui/*": ["../harbor/ui/*"],
+      "@twcode/ledger-ui": ["../ledger/ui"],
+      "@twcode/ledger-ui/*": ["../ledger/ui/*"],
+      "@twcode/captain-ui": ["../captain/ui"],
+      "@twcode/captain-ui/*": ["../captain/ui/*"],
+      "@twcode/skipper-ui": ["../skipper/ui"],
+      "@twcode/skipper-ui/*": ["../skipper/ui/*"],
       "@components": ["src/components"],
       "@components/*": ["src/components/*"]
     }
   },
-  "include": ["src", "../shared", "../ocean", "../shipwright", "../harbor"],
+  "include": ["src", "../shared", "../ocean", "../shipwright", "../harbor", "../ledger", "../captain", "../skipper"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

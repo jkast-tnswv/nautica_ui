@@ -57,3 +57,7 @@ export { Telemetry } from './Telemetry';
 // Nautica page components
 export { DevicesPage } from './DevicesPage';
 export { JobsPage } from './JobsPage';
+export { DnsPage } from './DnsPage';
+export { AccessPage } from './AccessPage';
+export { DeployPage } from './DeployPage';
+export { InfraPage } from './InfraPage';

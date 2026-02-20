@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package skipper;
+
+message SkipperPackageInfo {
+  string name        = 1;
+  string version     = 2;
+  string description = 3;
+}
+
+enum SkipperAuthMethods {
+  SKIPPER_AUTH_METHOD_UNSPECIFIED = 0;
+  SKIPPER_AUTH_METHOD_SSH_KEY     = 1;
+  SKIPPER_AUTH_METHOD_PASSWORD    = 2;
+  SKIPPER_AUTH_METHOD_CERTIFICATE = 3;
+}
+
+message SkipperServerTarget {
+  string             host                = 1;
+  uint32             port                = 2;
+  string             username            = 3;
+  SkipperAuthMethods skipper_auth_method = 4;
+}
+
+message SkipperVirtualMachineTarget {
+  string virtual_machine_id = 1;
+  // aws, azure, gcp, etc...
+  string provider = 2;
+  string region   = 3;
+}
+
+message SkipperContainerTarget {
+  string container_id = 1;
+  // kubernetes, docker, etc...
+  string orchestration_system = 2;
+  string namespace            = 3;
+}
+
+message SkipperTarget {
+  oneof skipper_target {
+    SkipperServerTarget         skipper_server_target          = 1;
+    SkipperVirtualMachineTarget skipper_virtual_machine_target = 2;
+    SkipperContainerTarget      skipper_container_target       = 3;
+  }
+}
+
+enum SkipperDeploymentStrategies {
+  SKIPPER_DEPLOYMENT_STRATEGY_UNSPECIFIED    = 0;
+  SKIPPER_DEPLOYMENT_STRATEGY_ROLLING_UPDATE = 1;
+  SKIPPER_DEPLOYMENT_STRATEGY_BLUE_GREEN     = 2;
+  SKIPPER_DEPLOYMENT_STRATEGY_CANARY         = 3;
+  SKIPPER_DEPLOYMENT_STRATEGY_IMMEDIATE      = 4;
+}
+
+message SkipperRequest {
+  string                      package_name                = 1;
+  string                      package_version             = 2;
+  repeated SkipperTarget      skipper_targets             = 3;
+  SkipperDeploymentStrategies skipper_deployment_strategy = 4;
+  bool                        auto_rollback               = 5;
+  uint32                      timeout_seconds             = 6;
+}
+
+message SkipperBuildRequest {
+  string package_name    = 1;
+  string package_version = 2;
+  string owner           = 3;
+}
+
+message SkipperBuildResponse {}
+
+message SkipperPushRequest {
+  string target = 1;
+}
+
+message SkipperPushResponse {}
+
+// Skipper Service
+service Skipper {
+  // Build SkipperPackage
+  rpc BuildSkipperPackage(SkipperBuildRequest) returns (SkipperBuildResponse);
+  // Push SkipperPackage
+  rpc PushSkipperPackage(SkipperPushRequest) returns (SkipperPushResponse);
+}

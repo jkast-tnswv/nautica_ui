@@ -19,6 +19,9 @@ services:
       - ./ocean/ui:/workspace/ocean/ui
       - ./shipwright/ui:/workspace/shipwright/ui
       - ./harbor/ui:/workspace/harbor/ui
+      - ./ledger/ui:/workspace/ledger/ui
+      - ./captain/ui:/workspace/captain/ui
+      - ./skipper/ui:/workspace/skipper/ui
       - /workspace/node_modules
       - /workspace/frontend/node_modules
     restart: unless-stopped

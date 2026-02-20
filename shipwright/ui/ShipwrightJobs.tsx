@@ -1,6 +1,6 @@
 import React, { useMemo, useState, type FormEvent } from 'react';
 import { useShipwrightJobs } from './useShipwrightJobs';
-import { Table, Cell, SelectField, FormField, FormDialog, ActionBar } from '@components';
+import { Table, Cell, SelectField, FormField, FormDialog, Card, InfoSection } from '@components';
 import type { ShipwrightJobResponse } from '@core/gen/shipwright/api/shipwright_pb';
 import { ShipwrightJobTypes } from '@core/gen/shipwright/api/shipwright_pb';
 import {
@@ -20,9 +20,10 @@ const jobTypeOptions = [
 export function ShipwrightJobs() {
   const {
     jobs, loading, error, refresh,
-    createJob, selectedJobDetails, detailsLoading, loadJobDetails, clearDetails,
+    createJob, selectedJobDetails, detailsLoading, detailsError, loadJobDetails, clearDetails,
   } = useShipwrightJobs();
 
+  const [showInfo, setShowInfo] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
@@ -92,22 +93,30 @@ export function ShipwrightJobs() {
     },
   ], []);
 
-  if (error) {
+  if (error && jobs.length === 0) {
     return <div className="error-message">Error loading jobs: {error}</div>;
   }
 
   return (
-    <div>
-      <ActionBar>
-        <button className="btn btn-primary" onClick={() => setShowCreateDialog(true)}>
-          <span className="material-icons-outlined">add</span>
-          New Job
-        </button>
-        <button className="btn btn-secondary" onClick={refresh}>
-          <span className="material-icons-outlined">refresh</span>
-          Refresh
-        </button>
-      </ActionBar>
+    <Card
+      title="Shipwright"
+      titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
+      headerAction={
+        <>
+          <button className="btn btn-sm btn-primary" onClick={() => setShowCreateDialog(true)}>
+            <span className="material-icons-outlined">add</span>
+            New Job
+          </button>
+          <button className="btn btn-sm btn-secondary" onClick={refresh}>
+            <span className="material-icons-outlined">refresh</span>
+            Refresh
+          </button>
+        </>
+      }
+    >
+      <InfoSection open={showInfo}>
+        <p>Shipwright manages device configuration workflows. Create jobs to configure, reconfigure, or unconfigure network devices. Click a row to view workflow details.</p>
+      </InfoSection>
 
       <Table
         data={jobs}
@@ -120,15 +129,15 @@ export function ShipwrightJobs() {
         pageSize={25}
         tableId="shipwright-jobs"
         onRowClick={(j) => loadJobDetails(j.jobId)}
-        renderExpandedRow={(j) =>
-          selectedJobDetails?.jobId === j.jobId ? (
-            <WorkflowViewer
-              details={selectedJobDetails}
-              loading={detailsLoading}
-              onClose={clearDetails}
-            />
-          ) : null
-        }
+        renderExpandedRow={(j) => {
+          if (detailsError) {
+            return <div style={{ padding: '16px', color: 'var(--color-error)' }}>Failed to load details: {detailsError}</div>;
+          }
+          if (detailsLoading || !selectedJobDetails || selectedJobDetails.jobId !== j.jobId) {
+            return <div style={{ padding: '16px', color: 'var(--color-text-secondary)' }}>Loading workflow details...</div>;
+          }
+          return <WorkflowViewer details={selectedJobDetails} loading={false} />;
+        }}
       />
 
       <FormDialog
@@ -164,6 +173,6 @@ export function ShipwrightJobs() {
           required
         />
       </FormDialog>
-    </div>
+    </Card>
   );
 }

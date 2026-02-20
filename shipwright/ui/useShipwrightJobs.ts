@@ -25,6 +25,7 @@ export interface UseShipwrightJobsReturn {
   createJob: (data: PartialMessage<ShipwrightJobRequest>) => Promise<boolean>;
   selectedJobDetails: ShipwrightJobDetailsResponse | null;
   detailsLoading: boolean;
+  detailsError: string | null;
   loadJobDetails: (jobId: string) => Promise<void>;
   clearDetails: () => void;
 }
@@ -32,7 +33,7 @@ export interface UseShipwrightJobsReturn {
 export function useShipwrightJobs(options: UseShipwrightJobsOptions = {}): UseShipwrightJobsReturn {
   const { autoRefresh = true, refreshInterval = 5000, filters } = options;
   const dispatch = useAppDispatch();
-  const { items: jobs, loading, error, selectedJobDetails, detailsLoading } = useAppSelector(
+  const { items: jobs, loading, error, selectedJobDetails, detailsLoading, detailsError } = useAppSelector(
     (state) => state.shipwrightJobs
   );
 
@@ -87,6 +88,7 @@ export function useShipwrightJobs(options: UseShipwrightJobsOptions = {}): UseSh
     createJob,
     selectedJobDetails: selectedJobDetails as ShipwrightJobDetailsResponse | null,
     detailsLoading,
+    detailsError,
     loadJobDetails,
     clearDetails,
   };

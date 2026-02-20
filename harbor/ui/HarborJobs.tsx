@@ -1,6 +1,6 @@
 import React, { useMemo, useState, type FormEvent } from 'react';
 import { useHarborJobs } from './useHarborJobs';
-import { Table, Cell, FormField, FormDialog, ActionBar, Checkbox } from '@components';
+import { Table, Cell, FormField, FormDialog, Card, InfoSection, Checkbox } from '@components';
 import type { HarborResponse } from '@core/gen/harbor/api/harbor_pb';
 import { HarborJobTypes } from '@core/gen/harbor/api/harbor_pb';
 import {
@@ -12,6 +12,7 @@ import {
 export function HarborJobs() {
   const { jobs, loading, error, refresh, embark, disembark } = useHarborJobs();
 
+  const [showInfo, setShowInfo] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [dialogType, setDialogType] = useState<'embark' | 'disembark'>('embark');
   const [saving, setSaving] = useState(false);
@@ -94,21 +95,29 @@ export function HarborJobs() {
   }
 
   return (
-    <div>
-      <ActionBar>
-        <button className="btn btn-primary" onClick={() => openDialog('embark')}>
-          <span className="material-icons-outlined">login</span>
-          Embark
-        </button>
-        <button className="btn btn-secondary" onClick={() => openDialog('disembark')}>
-          <span className="material-icons-outlined">logout</span>
-          Disembark
-        </button>
-        <button className="btn btn-secondary" onClick={refresh}>
-          <span className="material-icons-outlined">refresh</span>
-          Refresh
-        </button>
-      </ActionBar>
+    <Card
+      title="Harbor"
+      titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
+      headerAction={
+        <>
+          <button className="btn btn-sm btn-primary" onClick={() => openDialog('embark')}>
+            <span className="material-icons-outlined">login</span>
+            Embark
+          </button>
+          <button className="btn btn-sm btn-secondary" onClick={() => openDialog('disembark')}>
+            <span className="material-icons-outlined">logout</span>
+            Disembark
+          </button>
+          <button className="btn btn-sm btn-secondary" onClick={refresh}>
+            <span className="material-icons-outlined">refresh</span>
+            Refresh
+          </button>
+        </>
+      }
+    >
+      <InfoSection open={showInfo}>
+        <p>Harbor handles device lifecycle operations. Embark to bring devices online, disembark to take them offline. Use dry run to preview changes without applying them.</p>
+      </InfoSection>
 
       <Table
         data={jobs}
@@ -158,6 +167,6 @@ export function HarborJobs() {
           onChange={(checked) => setFormData(prev => ({ ...prev, force: checked }))}
         />
       </FormDialog>
-    </div>
+    </Card>
   );
 }

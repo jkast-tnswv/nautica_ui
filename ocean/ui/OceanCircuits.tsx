@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useOceanCircuits } from './useOceanCircuits';
-import { Table, Cell, ActionBar } from '@components';
+import { Table, Cell, Card, InfoSection } from '@components';
 import type { OceanCircuit } from '@core/gen/ocean/api/ocean_pb';
 import {
   oceanCircuitStatusLabel,
@@ -11,6 +11,7 @@ import { OceanCircuitStates } from '@core/gen/ocean/api/ocean_pb';
 
 export function OceanCircuits() {
   const { circuits, loading, error, refresh } = useOceanCircuits();
+  const [showInfo, setShowInfo] = useState(false);
 
   const columns = useMemo(() => [
     {
@@ -63,13 +64,19 @@ export function OceanCircuits() {
   }
 
   return (
-    <div>
-      <ActionBar>
-        <button className="btn btn-secondary" onClick={refresh}>
+    <Card
+      title="Circuits"
+      titleAction={<InfoSection.Toggle open={showInfo} onToggle={setShowInfo} />}
+      headerAction={
+        <button className="btn btn-sm btn-secondary" onClick={refresh}>
           <span className="material-icons-outlined">refresh</span>
           Refresh
         </button>
-      </ActionBar>
+      }
+    >
+      <InfoSection open={showInfo}>
+        <p>Circuits represent physical connections between ocean devices, including interface endpoints and link speed.</p>
+      </InfoSection>
       <Table
         data={circuits}
         columns={columns}
@@ -81,6 +88,6 @@ export function OceanCircuits() {
         pageSize={25}
         tableId="ocean-circuits"
       />
-    </div>
+    </Card>
   );
 }

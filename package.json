@@ -5,6 +5,9 @@
     "shared/core",
     "ocean/ui",
     "shipwright/ui",
-    "harbor/ui"
+    "harbor/ui",
+    "ledger/ui",
+    "captain/ui",
+    "skipper/ui"
   ]
 }
