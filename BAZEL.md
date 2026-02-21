@@ -97,7 +97,7 @@ rust_binary(
 Think of Bazel as a **DAG (directed acyclic graph)** of build steps:
 
 ```
-//shared/core:core
+//common/ui:core
        |
        ├──────────────────┐
        v                  v
@@ -110,6 +110,6 @@ Think of Bazel as a **DAG (directed acyclic graph)** of build steps:
 //backend-rust:image  (includes frontend dist)
 ```
 
-Change `shared/core/types.ts` → Bazel knows to rebuild `core`, `frontend:app`,
+Change `common/ui/types.ts` → Bazel knows to rebuild `core`, `frontend:app`,
 `frontend:bundle`, and `backend-rust:image`, but NOT `backend-rust:forge-config`
 (because the Rust binary doesn't depend on TypeScript).

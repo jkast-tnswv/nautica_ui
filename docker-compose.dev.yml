@@ -15,7 +15,7 @@ services:
       - "5174:5173"
     volumes:
       - ./frontend:/workspace/frontend
-      - ./shared:/workspace/shared
+      - ./common:/workspace/common
       - ./ocean/ui:/workspace/ocean/ui
       - ./shipwright/ui:/workspace/shipwright/ui
       - ./harbor/ui:/workspace/harbor/ui
@@ -25,8 +25,7 @@ services:
       - ./anchor/ui:/workspace/anchor/ui
       - ./keel/ui:/workspace/keel/ui
       - ./quartermaster/ui:/workspace/quartermaster/ui
-      - ./tidewatch/ui:/workspace/tidewatch/ui
-      - ./island/ui:/workspace/island/ui
+- ./island/ui:/workspace/island/ui
       - /workspace/node_modules
       - /workspace/frontend/node_modules
     restart: unless-stopped

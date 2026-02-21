@@ -111,6 +111,13 @@ export {
   useEntityData,
   type UseEntityDataOptions,
   type UseEntityDataReturn,
+  useTideWatch,
+  type StatBreakdown,
+  type TimeSeriesBucket,
+  type ShipwrightJobStats,
+  type RefDataStats,
+  type TileState,
+  type UseTideWatchReturn,
 } from './hooks';
 
 // Store

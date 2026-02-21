@@ -1,6 +1,6 @@
 packages:
   - frontend
-  - shared/core
+  - common/ui
   - ocean/ui
   - shipwright/ui
   - harbor/ui
@@ -10,4 +10,4 @@ packages:
   - anchor/ui
   - keel/ui
   - quartermaster/ui
-  - tidewatch/ui
+

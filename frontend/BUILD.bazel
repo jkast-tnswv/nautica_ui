@@ -38,8 +38,8 @@ filegroup(
 
 # ---- TypeScript compilation ----
 #
-# The @core path alias (-> ../shared/core) is handled by declaring
-# //shared/core as a dep. Bazel resolves it through the dependency
+# The @core path alias (-> ../common/ui) is handled by declaring
+# //common/ui as a dep. Bazel resolves it through the dependency
 # graph rather than filesystem path aliases.
 
 ts_project(
@@ -53,7 +53,7 @@ ts_project(
     # resolve_json_module = True,  # Uncomment if importing .json files
     deps = [
         # Shared core module (replaces the @core path alias)
-        "//shared/core",
+        "//common/ui",
 
         # npm dependencies
         ":node_modules/react",
@@ -81,7 +81,7 @@ ts_project(
     tsconfig = ":tsconfig.json",
     no_emit = True,
     deps = [
-        "//shared/core",
+        "//common/ui",
         ":node_modules/react",
         ":node_modules/react-dom",
         ":node_modules/react-redux",
@@ -173,8 +173,8 @@ js_test(
         "src/**/*.tsx",
     ]) + [
         # Shared core sources + tests (js_library handles output tree placement)
-        "//shared/core:srcs",
-        "//shared/core:tests",
+        "//common/ui:srcs",
+        "//common/ui:tests",
 
         # Service UI sources + tests (10 packages)
         "//ocean/ui:srcs",
@@ -195,9 +195,7 @@ js_test(
         "//keel/ui:tests",
         "//quartermaster/ui:srcs",
         "//quartermaster/ui:tests",
-        "//tidewatch/ui:srcs",
-        "//tidewatch/ui:tests",
-        "//island/ui:srcs",
+"//island/ui:srcs",
         "//island/ui:tests",
 
         # npm dependencies (vitest pulls in all transitive deps)

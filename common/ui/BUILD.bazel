@@ -1,5 +1,5 @@
 # =============================================================
-# shared/core/BUILD.bazel
+# common/ui/BUILD.bazel
 #
 # Shared TypeScript module consumed by both frontend and mobile.
 # This is NOT an npm package — it has no package.json. It's a
@@ -9,7 +9,7 @@
 # the consumer's tsconfig. For Bazel, we generate a minimal one.
 #
 # Targets:
-#   bazel build //shared/core:core   Compile to JS + declarations
+#   bazel build //common/ui:core   Compile to JS + declarations
 # =============================================================
 
 load("@aspect_rules_js//js:defs.bzl", "js_library")
@@ -68,7 +68,7 @@ ts_project(
     declaration = True,
     tsconfig = ":tsconfig.bazel.json",
     deps = [
-        # These come from the frontend's node_modules since shared/core
+        # These come from the frontend's node_modules since common/ui
         # has no package.json of its own. The frontend and mobile both
         # provide react + redux at the same versions.
         "@npm_frontend//:node_modules/react",

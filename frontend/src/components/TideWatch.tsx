@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Badge, Card, IconButton, RefreshIcon, StatTile, TimeRangeSelector, TimeSeriesChart } from '@components';
-import { useTideWatch } from '../hooks/useTideWatch';
-import type { StatBreakdown } from '../hooks/useTideWatch';
+import { useTideWatch } from '@core/hooks/useTideWatch';
+import type { StatBreakdown } from '@core/hooks/useTideWatch';
 
 function BreakdownSection({ title, items }: { title: string; items: StatBreakdown[] }) {
   if (items.length === 0) return null;

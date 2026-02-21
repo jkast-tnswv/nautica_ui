@@ -121,7 +121,7 @@ mobile/
 ├── src/
 │   ├── config.ts           # API base URL configuration
 │   ├── core/               # Shared core + mobile-specific overrides
-│   │   ├── index.ts        # Re-exports from shared/core
+│   │   ├── index.ts        # Re-exports from common/ui
 │   │   └── typography.ts   # Mobile-specific font constants
 │   ├── context/            # React contexts (theme, services)
 │   ├── navigation/
@@ -163,7 +163,7 @@ mobile/
 
 ## Shared Code
 
-This app shares code with the web frontend via `shared/core/`:
+This app shares code with the web frontend via `common/ui/`:
 - **Types** - Device, Settings, Template, Vendor, etc.
 - **Services** - API calls (DeviceService, SettingsService, TemplateService, etc.)
 - **Hooks** - useDevices, useSettings, useTemplates, useVendors, useDhcpOptions, etc.

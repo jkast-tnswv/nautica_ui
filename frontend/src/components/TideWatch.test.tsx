@@ -1,4 +1,4 @@
-vi.mock('../hooks/useTideWatch', () => ({
+vi.mock('@core/hooks/useTideWatch', () => ({
   useTideWatch: vi.fn(() => ({
     devices: {
       data: {
@@ -53,7 +53,7 @@ vi.mock('../hooks/useTideWatch', () => ({
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { TideWatch } from './TideWatch';
-import { useTideWatch } from '../hooks/useTideWatch';
+import { useTideWatch } from '@core/hooks/useTideWatch';
 
 describe('TideWatch', () => {
   it('renders card title', () => {

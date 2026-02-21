@@ -1,4 +1,4 @@
-vi.mock('@twcode/tidewatch-ui', () => ({
+vi.mock('./TideWatch', () => ({
   TideWatch: () => <div>TideWatch</div>,
 }));
 

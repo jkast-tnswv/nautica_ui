@@ -1,4 +1,4 @@
-import { TideWatch } from '@twcode/tidewatch-ui';
+import { TideWatch } from './TideWatch';
 
 export function TideWatchPage() {
   return <TideWatch />;

@@ -13,7 +13,7 @@ function getGitCommit(): string {
 
 // Vite plugin that resolves bare module imports through the frontend's
 // node_modules directory. Needed for Bazel sandbox where source files from
-// other packages (shared/core, service UIs) can't find node_modules via
+// other packages (common/ui, service UIs) can't find node_modules via
 // standard Node resolution because they're placed outside the frontend tree.
 //
 // Uses Vite's own resolver (this.resolve) with a virtual importer inside
@@ -42,7 +42,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@core': path.resolve(__dirname, '../shared/core'),
+      '@core': path.resolve(__dirname, '../common/ui'),
       '@twcode/ocean-ui': path.resolve(__dirname, '../ocean/ui'),
       '@twcode/shipwright-ui': path.resolve(__dirname, '../shipwright/ui'),
       '@twcode/harbor-ui': path.resolve(__dirname, '../harbor/ui'),
@@ -52,7 +52,6 @@ export default defineConfig({
       '@twcode/anchor-ui': path.resolve(__dirname, '../anchor/ui'),
       '@twcode/keel-ui': path.resolve(__dirname, '../keel/ui'),
       '@twcode/quartermaster-ui': path.resolve(__dirname, '../quartermaster/ui'),
-      '@twcode/tidewatch-ui': path.resolve(__dirname, '../tidewatch/ui'),
       '@twcode/island-ui': path.resolve(__dirname, '../island/ui'),
       '@components': path.resolve(__dirname, 'src/components'),
     },

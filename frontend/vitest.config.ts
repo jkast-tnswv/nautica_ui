@@ -9,7 +9,7 @@ export default mergeConfig(viteConfig, defineConfig({
     css: false,
     include: [
       'src/**/*.{test,spec}.{ts,tsx}',
-      '../shared/**/*.{test,spec}.{ts,tsx}',
+      '../common/**/*.{test,spec}.{ts,tsx}',
       '../*/ui/**/*.{test,spec}.{ts,tsx}',
     ],
     coverage: {
@@ -17,9 +17,9 @@ export default mergeConfig(viteConfig, defineConfig({
       allowExternal: true,
       include: [
         'src/components/**/*.{ts,tsx}',
-        'shared/core/utils/**/*.ts',
-        'shared/core/hooks/**/*.ts',
-        'shared/core/store/**/*.ts',
+        'common/ui/utils/**/*.ts',
+        'common/ui/hooks/**/*.ts',
+        'common/ui/store/**/*.ts',
         '*/ui/**/*.{ts,tsx}',
       ],
       exclude: [

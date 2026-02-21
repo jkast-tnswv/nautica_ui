@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": [
     "frontend",
-    "shared/core",
+    "common/ui",
     "ocean/ui",
     "shipwright/ui",
     "harbor/ui",
@@ -12,7 +12,6 @@
     "anchor/ui",
     "keel/ui",
     "quartermaster/ui",
-    "tidewatch/ui",
     "island/ui"
   ],
   "pnpm": {

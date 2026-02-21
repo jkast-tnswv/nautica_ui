@@ -5,8 +5,7 @@
 node_modules
 frontend/node_modules
 mobile/node_modules
-shared/node_modules
-shared/core/node_modules
+common/ui/node_modules
 anchor/ui/node_modules
 captain/ui/node_modules
 harbor/ui/node_modules
@@ -16,7 +15,6 @@ ocean/ui/node_modules
 quartermaster/ui/node_modules
 shipwright/ui/node_modules
 skipper/ui/node_modules
-tidewatch/ui/node_modules
 frontend/dist
 mobile/dist
 backend-rust/target

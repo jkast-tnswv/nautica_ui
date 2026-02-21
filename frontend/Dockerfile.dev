@@ -5,7 +5,7 @@ WORKDIR /workspace
 # Copy workspace root + all package.json files so npm can resolve workspaces
 COPY package.json ./
 COPY frontend/package*.json ./frontend/
-COPY shared/core/package.json ./shared/core/
+COPY common/ui/package.json ./common/ui/
 COPY ocean/ui/package.json ./ocean/ui/
 COPY shipwright/ui/package.json ./shipwright/ui/
 COPY harbor/ui/package.json ./harbor/ui/
@@ -15,7 +15,6 @@ COPY skipper/ui/package.json ./skipper/ui/
 COPY anchor/ui/package.json ./anchor/ui/
 COPY keel/ui/package.json ./keel/ui/
 COPY quartermaster/ui/package.json ./quartermaster/ui/
-COPY tidewatch/ui/package.json ./tidewatch/ui/
 COPY island/ui/package.json ./island/ui/
 
 RUN npm install --workspace=frontend

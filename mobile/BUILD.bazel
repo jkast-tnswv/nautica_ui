@@ -9,7 +9,7 @@
 #
 # What Bazel DOES own here:
 #   - TypeScript type-checking (catches errors before EAS build)
-#   - Dependency on //shared/core (ensures shared code compiles)
+#   - Dependency on //common/ui (ensures shared code compiles)
 #
 # Targets:
 #   bazel test //mobile:typecheck    TypeScript validation
@@ -37,7 +37,7 @@ ts_project(
     no_emit = True,
     deps = [
         # Shared core module
-        "//shared/core",
+        "//common/ui",
 
         # npm dependencies — only what's needed for type-checking
         ":node_modules/react",

@@ -67,4 +67,15 @@ export {
   type UseEntityDataReturn,
 } from './useEntityData';
 
+// TideWatch (dashboard aggregation hook — no backend service)
+export {
+  useTideWatch,
+  type StatBreakdown,
+  type TimeSeriesBucket,
+  type ShipwrightJobStats,
+  type RefDataStats,
+  type TileState,
+  type UseTideWatchReturn,
+} from './useTideWatch';
+
 // Service-specific hooks are now in @twcode/{service}-ui packages

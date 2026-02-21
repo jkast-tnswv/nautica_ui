@@ -18,8 +18,8 @@
     "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
-      "@core": ["../shared/core"],
-      "@core/*": ["../shared/core/*"],
+      "@core": ["../common/ui"],
+      "@core/*": ["../common/ui/*"],
       "@twcode/ocean-ui": ["../ocean/ui"],
       "@twcode/ocean-ui/*": ["../ocean/ui/*"],
       "@twcode/shipwright-ui": ["../shipwright/ui"],
@@ -38,14 +38,12 @@
       "@twcode/keel-ui/*": ["../keel/ui/*"],
       "@twcode/quartermaster-ui": ["../quartermaster/ui"],
       "@twcode/quartermaster-ui/*": ["../quartermaster/ui/*"],
-      "@twcode/tidewatch-ui": ["../tidewatch/ui"],
-      "@twcode/tidewatch-ui/*": ["../tidewatch/ui/*"],
-      "@twcode/island-ui": ["../island/ui"],
+"@twcode/island-ui": ["../island/ui"],
       "@twcode/island-ui/*": ["../island/ui/*"],
       "@components": ["src/components"],
       "@components/*": ["src/components/*"]
     }
   },
-  "include": ["src", "../shared", "../ocean", "../shipwright", "../harbor", "../ledger", "../captain", "../skipper", "../anchor", "../keel", "../quartermaster", "../tidewatch", "../island"],
+  "include": ["src", "../common", "../ocean", "../shipwright", "../harbor", "../ledger", "../captain", "../skipper", "../anchor", "../keel", "../quartermaster", "../island"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
