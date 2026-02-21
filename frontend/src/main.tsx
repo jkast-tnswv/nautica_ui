@@ -13,6 +13,7 @@ import './styles/components.css';
 import './styles/overlays.css';
 import './styles/pages.css';
 import './styles/tidewatch.css';
+import './styles/game.css';
 import './styles/theme-overrides.css';
 
 // Initialize gRPC transport pointing at Envoy proxy

@@ -1,0 +1,79 @@
+/* Tensio — Hidden Easter Egg Game */
+
+.game-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1060;
+  animation: fadeIn var(--transition-fast) ease;
+}
+
+.game-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.game-canvas {
+  display: block;
+  border: 3px solid #0CE2F2;
+  box-shadow: 0 0 40px rgba(12, 226, 242, 0.3), 0 0 80px rgba(12, 226, 242, 0.1);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.game-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #04111A;
+  border: 3px solid #0CE2F2;
+  border-bottom: none;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #0CE2F2;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.game-close-btn {
+  background: transparent;
+  border: 1px solid #0CE2F2;
+  color: #0CE2F2;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: background 0.1s, color 0.1s;
+}
+
+.game-close-btn:hover {
+  background: #0CE2F2;
+  color: #020A0E;
+}
+
+.game-hint {
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: #0CE2F2;
+  opacity: 0.7;
+  letter-spacing: 0.08em;
+  animation: gameBlink 1s step-end infinite;
+}
+
+@keyframes gameBlink {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.1; }
+}

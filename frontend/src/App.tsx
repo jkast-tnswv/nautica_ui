@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store, getApiHistory, getTelemetryEvents, initTelemetry, trackEvent, useNotificationHistory, useModalRoute } from '@core';
@@ -30,6 +30,7 @@ import { DeployPage } from './components/DeployPage';
 import { InfraPage } from './components/InfraPage';
 import { TideWatchPage } from './components/TideWatchPage';
 import { IslandPage } from './components/IslandPage';
+import { Tensio } from './components/Tensio';
 import { LayoutProvider } from './context';
 function WaveLogo({ className }: { className?: string }) {
   return (
@@ -162,6 +163,18 @@ function AppContent() {
   const [showHelp, setShowHelp] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showScratchPad, setShowScratchPad] = useState(false);
+  const [showGame, setShowGame] = useState(false);
+
+  // Easter egg trigger: click logo 5 times within 3 seconds
+  const logoClicksRef = useRef<number[]>([]);
+  const handleLogoClick = useCallback(() => {
+    const now = Date.now();
+    logoClicksRef.current = logoClicksRef.current.filter(t => now - t < 3000).concat(now);
+    if (logoClicksRef.current.length >= 2) {
+      logoClicksRef.current = [];
+      setShowGame(true);
+    }
+  }, []);
 
   // Initialize telemetry on mount
   useEffect(() => { initTelemetry(); }, []);
@@ -205,7 +218,7 @@ function AppContent() {
       <header className="header">
         <div className="header-content">
           <div className="header-left">
-            <div className="header-logo">
+            <div className="header-logo" onClick={handleLogoClick} style={{ cursor: 'pointer', userSelect: 'none' }}>
               <WaveLogo className="header-logo-img" />
               <span className="header-title">Nautica</span>
             </div>
@@ -377,6 +390,8 @@ function AppContent() {
       />
 
       <NotificationPopup />
+
+      <Tensio isOpen={showGame} onClose={() => setShowGame(false)} />
     </>
   );
 }
