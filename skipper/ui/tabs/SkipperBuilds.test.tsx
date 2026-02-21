@@ -32,28 +32,82 @@ describe('SkipperBuilds', () => {
     expect(screen.getByText('Time')).toBeInTheDocument();
   });
 
-  it('shows error when error state', () => {
+  it('shows error message when error state is set', () => {
     renderWithStore(<SkipperBuilds />, {
       skipper: { builds: [], loading: false, error: 'Build server unavailable' },
     });
     expect(screen.getByText(/Build server unavailable/)).toBeInTheDocument();
   });
 
-  it('opens New Build dialog', () => {
+  it('shows empty message when no builds and not loading', () => {
+    renderWithStore(<SkipperBuilds />, {
+      skipper: { builds: [], loading: false, error: null },
+    });
+    expect(screen.getByText(/No builds yet/)).toBeInTheDocument();
+  });
+
+  it('shows loading message when loading with no builds', () => {
+    renderWithStore(<SkipperBuilds />, {
+      skipper: { builds: [], loading: true, error: null },
+    });
+    expect(screen.getByText('Building...')).toBeInTheDocument();
+  });
+
+  it('opens New Build dialog and renders form fields', () => {
     renderWithStore(<SkipperBuilds />, {
       skipper: { builds: [], loading: false, error: null },
     });
     fireEvent.click(screen.getByText('New Build'));
     expect(screen.getByText('Build Package')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Package Name/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Version/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Owner/)).toBeInTheDocument();
   });
 
-  it('renders dialog form fields', () => {
+  it('disables Build button until required fields are filled', () => {
     renderWithStore(<SkipperBuilds />, {
       skipper: { builds: [], loading: false, error: null },
     });
     fireEvent.click(screen.getByText('New Build'));
-    expect(screen.getByLabelText(/Package Name/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Version/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Owner/)).toBeInTheDocument();
+
+    // Build button should be disabled initially (packageName and owner are empty)
+    const buildButton = screen.getByRole('button', { name: 'Build' });
+    expect(buildButton).toBeDisabled();
+
+    // Fill package name only — still disabled (owner is empty)
+    fireEvent.change(screen.getByLabelText(/Package Name/), { target: { value: 'my-pkg', name: 'packageName' } });
+    expect(buildButton).toBeDisabled();
+
+    // Fill owner — now enabled
+    fireEvent.change(screen.getByLabelText(/Owner/), { target: { value: 'jsmith', name: 'owner' } });
+    expect(buildButton).not.toBeDisabled();
+  });
+
+  it('toggles info section when info button is clicked', () => {
+    renderWithStore(<SkipperBuilds />, {
+      skipper: { builds: [], loading: false, error: null },
+    });
+
+    expect(screen.queryByText(/package builds and deployments/)).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTitle('Show info'));
+    expect(screen.getByText(/package builds and deployments/)).toBeInTheDocument();
+  });
+
+  it('resets form fields when reopening dialog', () => {
+    renderWithStore(<SkipperBuilds />, {
+      skipper: { builds: [], loading: false, error: null },
+    });
+
+    // Open dialog and fill fields
+    fireEvent.click(screen.getByText('New Build'));
+    fireEvent.change(screen.getByLabelText(/Package Name/), { target: { value: 'my-pkg', name: 'packageName' } });
+    expect(screen.getByLabelText(/Package Name/)).toHaveValue('my-pkg');
+
+    // Close and reopen
+    fireEvent.click(screen.getByLabelText('Close modal'));
+    fireEvent.click(screen.getByText('New Build'));
+
+    // Fields should be reset
+    expect(screen.getByLabelText(/Package Name/)).toHaveValue('');
   });
 });
