@@ -20,6 +20,7 @@ vi.mock('@core/services', () => ({
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { IslandFirmware } from './IslandFirmware';
+import { useIslandFirmware } from '../hooks/useIslandFirmware';
 
 describe('IslandFirmware', () => {
   beforeEach(() => {
@@ -77,5 +78,46 @@ describe('IslandFirmware', () => {
     render(<IslandFirmware />);
     fireEvent.click(screen.getByText('Upload Firmware'));
     expect(screen.getByText('Upload')).toBeDisabled();
+  });
+
+  it('renders vendor labels', () => {
+    render(<IslandFirmware />);
+    expect(screen.getByText('Arista')).toBeInTheDocument();
+    expect(screen.getByText('Edgecore')).toBeInTheDocument();
+  });
+
+  it('renders status labels', () => {
+    render(<IslandFirmware />);
+    expect(screen.getAllByText('Available')).toHaveLength(2);
+  });
+
+  it('shows error message when error is set', () => {
+    vi.mocked(useIslandFirmware).mockReturnValueOnce({
+      firmware: [],
+      loading: false,
+      error: 'Load failed',
+      refresh: mockRefresh,
+    });
+    render(<IslandFirmware />);
+    expect(screen.getByText('Error loading firmware: Load failed')).toBeInTheDocument();
+  });
+
+  it('fills upload form fields', () => {
+    render(<IslandFirmware />);
+    fireEvent.click(screen.getByText('Upload Firmware'));
+    const platformInput = screen.getByLabelText('Platform');
+    fireEvent.change(platformInput, { target: { name: 'platform', value: 'DCS-7050' } });
+    expect(platformInput).toHaveValue('DCS-7050');
+  });
+
+  it('reopening upload dialog resets form', () => {
+    render(<IslandFirmware />);
+    fireEvent.click(screen.getByText('Upload Firmware'));
+    const platformInput = screen.getByLabelText('Platform');
+    fireEvent.change(platformInput, { target: { name: 'platform', value: 'DCS-7050' } });
+    expect(platformInput).toHaveValue('DCS-7050');
+    fireEvent.click(screen.getByText('Cancel'));
+    fireEvent.click(screen.getByText('Upload Firmware'));
+    expect(screen.getByLabelText('Platform')).toHaveValue('');
   });
 });

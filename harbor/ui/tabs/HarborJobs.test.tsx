@@ -1,3 +1,7 @@
+const mockEmbark = vi.fn();
+const mockDisembark = vi.fn();
+const mockRefresh = vi.fn();
+
 vi.mock('../hooks/useHarborJobs', () => ({
   useHarborJobs: vi.fn(() => ({
     jobs: [
@@ -12,16 +16,24 @@ vi.mock('../hooks/useHarborJobs', () => ({
     ],
     loading: false,
     error: null,
-    refresh: vi.fn(),
-    embark: vi.fn(),
-    disembark: vi.fn(),
+    refresh: mockRefresh,
+    embark: mockEmbark,
+    disembark: mockDisembark,
   })),
 }));
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
+import { useHarborJobs } from '../hooks/useHarborJobs';
 import { HarborJobs } from './HarborJobs';
 
 describe('HarborJobs', () => {
+  beforeEach(() => {
+    mockEmbark.mockClear();
+    mockDisembark.mockClear();
+    mockRefresh.mockClear();
+    vi.mocked(useHarborJobs).mockClear();
+  });
+
   it('renders card title', () => {
     render(<HarborJobs />);
     expect(screen.getByText('Harbor')).toBeInTheDocument();
@@ -62,5 +74,100 @@ describe('HarborJobs', () => {
     expect(screen.getByLabelText(/Owner/)).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: /Dry Run/ })).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: /Force/ })).toBeInTheDocument();
+  });
+
+  it('submits embark form successfully', async () => {
+    mockEmbark.mockResolvedValueOnce(true);
+    render(<HarborJobs />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Embark/ }));
+    fireEvent.change(screen.getByLabelText(/Hostname/), { target: { name: 'hostname', value: 'switch-99.dc2' } });
+    fireEvent.change(screen.getByLabelText(/Owner/), { target: { name: 'owner', value: 'testuser' } });
+
+    await act(async () => {
+      fireEvent.submit(screen.getByLabelText(/Hostname/).closest('form')!);
+    });
+
+    expect(mockEmbark).toHaveBeenCalledWith({
+      hostname: 'switch-99.dc2',
+      harborJobType: 1,
+      owner: 'testuser',
+      dryRun: false,
+      force: false,
+    });
+    expect(screen.queryByText('Embark Device')).not.toBeInTheDocument();
+  });
+
+  it('submits disembark form successfully', async () => {
+    mockDisembark.mockResolvedValueOnce(true);
+    render(<HarborJobs />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Disembark/ }));
+    fireEvent.change(screen.getByLabelText(/Hostname/), { target: { name: 'hostname', value: 'switch-50.dc3' } });
+    fireEvent.change(screen.getByLabelText(/Owner/), { target: { name: 'owner', value: 'admin' } });
+
+    await act(async () => {
+      fireEvent.submit(screen.getByLabelText(/Hostname/).closest('form')!);
+    });
+
+    expect(mockDisembark).toHaveBeenCalledWith({
+      hostname: 'switch-50.dc3',
+      harborJobType: 2,
+      owner: 'admin',
+      dryRun: false,
+      force: false,
+    });
+    expect(screen.queryByText('Disembark Device')).not.toBeInTheDocument();
+  });
+
+  it('keeps dialog open on failed submission', async () => {
+    mockEmbark.mockResolvedValueOnce(false);
+    render(<HarborJobs />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Embark/ }));
+    fireEvent.change(screen.getByLabelText(/Hostname/), { target: { name: 'hostname', value: 'switch-01.dc1' } });
+    fireEvent.change(screen.getByLabelText(/Owner/), { target: { name: 'owner', value: 'testuser' } });
+
+    await act(async () => {
+      fireEvent.submit(screen.getByLabelText(/Hostname/).closest('form')!);
+    });
+
+    expect(mockEmbark).toHaveBeenCalled();
+    expect(screen.getByText('Embark Device')).toBeInTheDocument();
+  });
+
+  it('renders error state', () => {
+    vi.mocked(useHarborJobs).mockReturnValueOnce({
+      jobs: [],
+      loading: false,
+      error: 'Server error',
+      refresh: mockRefresh,
+      embark: mockEmbark,
+      disembark: mockDisembark,
+    });
+
+    render(<HarborJobs />);
+    expect(screen.getByText(/Error loading harbor jobs: Server error/)).toBeInTheDocument();
+    expect(screen.queryByText('Harbor')).not.toBeInTheDocument();
+  });
+
+  it('toggles dry run checkbox', async () => {
+    mockEmbark.mockResolvedValueOnce(true);
+    render(<HarborJobs />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Embark/ }));
+    fireEvent.change(screen.getByLabelText(/Hostname/), { target: { name: 'hostname', value: 'switch-01.dc1' } });
+    fireEvent.change(screen.getByLabelText(/Owner/), { target: { name: 'owner', value: 'testuser' } });
+    fireEvent.click(screen.getByRole('checkbox', { name: /Dry Run/ }));
+
+    await act(async () => {
+      fireEvent.submit(screen.getByLabelText(/Hostname/).closest('form')!);
+    });
+
+    expect(mockEmbark).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dryRun: true,
+      }),
+    );
   });
 });

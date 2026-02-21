@@ -16,11 +16,16 @@ vi.mock('../hooks/useLedger', () => ({
   })),
 }));
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useLedger } from '../hooks/useLedger';
 import { LedgerSearch } from './LedgerSearch';
 
 describe('LedgerSearch', () => {
+  beforeEach(() => {
+    mockSearch.mockClear();
+    mockClear.mockClear();
+  });
+
   it('renders card title', () => {
     render(<LedgerSearch />);
     expect(screen.getByText('Leger Lookup')).toBeInTheDocument();
@@ -50,5 +55,68 @@ describe('LedgerSearch', () => {
     });
     render(<LedgerSearch />);
     expect(screen.getByText('Enter a hostname or IP to search')).toBeInTheDocument();
+  });
+
+  it('calls search on form submit', () => {
+    render(<LedgerSearch />);
+    const input = screen.getByPlaceholderText('Hostname or IP address...');
+    fireEvent.change(input, { target: { value: 'example.com' } });
+    const form = input.closest('form')!;
+    fireEvent.submit(form);
+    expect(mockSearch).toHaveBeenCalledWith('example.com');
+  });
+
+  it('renders Clear button when records exist', () => {
+    render(<LedgerSearch />);
+    expect(screen.getByText('Clear')).toBeInTheDocument();
+  });
+
+  it('calls clear and resets input on Clear click', () => {
+    render(<LedgerSearch />);
+    const input = screen.getByPlaceholderText('Hostname or IP address...');
+    fireEvent.change(input, { target: { value: 'something' } });
+    fireEvent.click(screen.getByText('Clear'));
+    expect(mockClear).toHaveBeenCalled();
+    expect(input).toHaveValue('');
+  });
+
+  it('renders error state', () => {
+    vi.mocked(useLedger).mockReturnValueOnce({
+      records: [],
+      loading: false,
+      error: 'DNS lookup failed',
+      query: '',
+      search: mockSearch,
+      clear: mockClear,
+    });
+    render(<LedgerSearch />);
+    expect(screen.getByText('Error: DNS lookup failed')).toBeInTheDocument();
+    expect(screen.queryByText('Leger Lookup')).not.toBeInTheDocument();
+  });
+
+  it('shows loading message', () => {
+    vi.mocked(useLedger).mockReturnValueOnce({
+      records: [],
+      loading: true,
+      error: null,
+      query: 'test',
+      search: mockSearch,
+      clear: mockClear,
+    });
+    render(<LedgerSearch />);
+    expect(screen.getByText('Searching...')).toBeInTheDocument();
+  });
+
+  it('shows no records found message', () => {
+    vi.mocked(useLedger).mockReturnValueOnce({
+      records: [],
+      loading: false,
+      error: null,
+      query: 'nonexistent',
+      search: mockSearch,
+      clear: mockClear,
+    });
+    render(<LedgerSearch />);
+    expect(screen.getByText('No records found')).toBeInTheDocument();
   });
 });
