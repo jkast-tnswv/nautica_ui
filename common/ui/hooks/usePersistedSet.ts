@@ -16,8 +16,8 @@ function load(key: string): Set<string | number> {
 function save(key: string, set: Set<string | number>) {
   try {
     localStorage.setItem(key, JSON.stringify([...set]));
-  } catch {
-    // Storage full or unavailable — ignore
+  } catch (e) {
+    console.warn(`usePersistedSet: failed to save key "${key}"`, e);
   }
 }
 

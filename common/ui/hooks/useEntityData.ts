@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+import type { RootState } from '../store';
 import type { AsyncThunk } from '@reduxjs/toolkit';
 
 interface EntityStateShape<T> {
@@ -22,8 +23,8 @@ export interface UseEntityDataReturn<T> {
 }
 
 export function useEntityData<T, FilterArg = void>(
-  fetchThunk: AsyncThunk<T[], any, any>,
-  selector: (state: any) => EntityStateShape<T>,
+  fetchThunk: AsyncThunk<T[], FilterArg, {}>,
+  selector: (state: RootState) => EntityStateShape<T>,
   options: UseEntityDataOptions<FilterArg> = {} as UseEntityDataOptions<FilterArg>,
 ): UseEntityDataReturn<T> {
   const { autoRefresh = true, refreshInterval = 10000, filters } = options;
@@ -32,15 +33,13 @@ export function useEntityData<T, FilterArg = void>(
 
   useEffect(() => {
     dispatch(fetchThunk(filters));
-  }, [dispatch, filters]);
 
-  useEffect(() => {
     if (!autoRefresh) return;
     const interval = setInterval(() => {
       dispatch(fetchThunk(filters));
     }, refreshInterval);
     return () => clearInterval(interval);
-  }, [autoRefresh, refreshInterval, dispatch, filters]);
+  }, [dispatch, fetchThunk, filters, autoRefresh, refreshInterval]);
 
   const refresh = useCallback(async () => {
     await dispatch(fetchThunk(filters));

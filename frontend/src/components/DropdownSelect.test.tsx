@@ -75,12 +75,14 @@ describe('DropdownSelect', () => {
     expect(screen.getByPlaceholderText('Search pages...')).toBeInTheDocument();
   });
 
-  it('filters options by search term', () => {
+  it('filters options by search term and hides non-matching', () => {
     render(<DropdownSelect options={options} value="" onChange={() => {}} searchable />);
     fireEvent.click(screen.getByRole('button'));
     fireEvent.change(screen.getByPlaceholderText('Search pages...'), { target: { value: 'sett' } });
     expect(screen.getAllByRole('option')).toHaveLength(1);
     expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.queryByText('Home')).not.toBeInTheDocument();
+    expect(screen.queryByText('Profile')).not.toBeInTheDocument();
   });
 
   it('shows no matches when search finds nothing', () => {

@@ -63,6 +63,22 @@ describe('formatFileSize', () => {
   it('formats gigabytes', () => {
     expect(formatFileSize(1073741824)).toBe('1 GB');
   });
+
+  it('handles negative values', () => {
+    // Math.log of negative is NaN, so sizes[NaN] is undefined — guard this
+    const result = formatFileSize(-100);
+    expect(typeof result).toBe('string');
+  });
+
+  it('handles very large values', () => {
+    // 5 TB — exceeds the sizes array length
+    const result = formatFileSize(5 * 1024 ** 4);
+    expect(typeof result).toBe('string');
+  });
+
+  it('formats with decimal precision', () => {
+    expect(formatFileSize(1234567)).toBe('1.2 MB');
+  });
 });
 
 describe('formatEventType', () => {

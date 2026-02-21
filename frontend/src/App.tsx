@@ -217,6 +217,7 @@ function AppContent() {
             <Tooltip content="Notifications" position="bottom">
               <button
                 className="header-control"
+                aria-label="Notifications"
                 onClick={() => { setShowNotifications(true); modalRoute.openModal('notifications'); }}
                 style={{ position: 'relative', width: 40 }}
               >
@@ -229,6 +230,7 @@ function AppContent() {
             <Tooltip content="Notes" position="bottom">
               <button
                 className="header-control"
+                aria-label="Notes"
                 onClick={() => setShowScratchPad((v) => !v)}
                 style={{ width: 40 }}
               >
@@ -236,7 +238,7 @@ function AppContent() {
               </button>
             </Tooltip>
             <Tooltip content={`Signed in as ${user?.email || user?.name || 'unknown'}`} position="bottom">
-              <button className="header-control" onClick={logout} style={{ width: 40 }}>
+              <button className="header-control" aria-label="Log out" onClick={logout} style={{ width: 40 }}>
                 <Icon name="logout" size={20} />
               </button>
             </Tooltip>
@@ -277,6 +279,7 @@ function AppContent() {
             <Tooltip content="QR / Barcode Generator">
               <button
                 className="icon-button"
+                aria-label="QR / Barcode Generator"
                 onClick={() => setShowCodeGenerator(true)}
               >
                 <Icon name="qr_code_2" size={20} />
@@ -285,6 +288,7 @@ function AppContent() {
             <Tooltip content="API call history">
               <button
                 className="icon-button"
+                aria-label="API call history"
                 onClick={() => { setShowApiHistory(true); modalRoute.openModal('api-history'); }}
               >
                 <Icon name="history" size={20} />
@@ -293,13 +297,14 @@ function AppContent() {
             <Tooltip content="Telemetry">
               <button
                 className="icon-button"
+                aria-label="Telemetry"
                 onClick={() => { setShowTelemetry(true); modalRoute.openModal('telemetry'); }}
               >
                 <Icon name="insights" size={20} />
               </button>
             </Tooltip>
             <Tooltip content="Download bug report">
-              <button className="icon-button" onClick={handleBugReport}>
+              <button className="icon-button" aria-label="Download bug report" onClick={handleBugReport}>
                 <Icon name="bug_report" size={20} />
               </button>
             </Tooltip>
@@ -308,6 +313,7 @@ function AppContent() {
             <Tooltip content="Settings">
               <button
                 className="icon-button"
+                aria-label="Settings"
                 onClick={() => { setShowSettings(true); modalRoute.openModal('settings'); }}
               >
                 <Icon name="settings" size={20} />
@@ -317,6 +323,7 @@ function AppContent() {
             <Tooltip content="Help">
               <button
                 className="icon-button"
+                aria-label="Help"
                 onClick={() => { setShowHelp(true); modalRoute.openModal('help'); }}
               >
                 <Icon name="help" size={20} />

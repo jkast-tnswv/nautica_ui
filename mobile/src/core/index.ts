@@ -106,7 +106,6 @@ export {
   useWebSocket,
   useModalForm,
   useNotification,
-  createMobileNotificationHandler,
   createWebNotificationHandler,
   useListFiltering,
   useAsyncModal,

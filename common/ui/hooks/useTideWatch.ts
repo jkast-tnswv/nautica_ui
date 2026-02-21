@@ -342,16 +342,22 @@ function useTileFetch<TRaw, TStats>(
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const rawRef = useRef<TRaw | null>(null);
+  const fetchFnRef = useRef(fetchFn);
+  const computeFnRef = useRef(computeFn);
+
+  // Keep refs current so the interval always uses latest closures
+  fetchFnRef.current = fetchFn;
+  computeFnRef.current = computeFn;
 
   useEffect(() => {
     let cancelled = false;
     const doFetch = async () => {
       if (rawRef.current === null) setLoading(true);
       try {
-        const raw = await fetchFn();
+        const raw = await fetchFnRef.current();
         if (!cancelled) {
           rawRef.current = raw;
-          setData(computeFn(raw));
+          setData(computeFnRef.current(raw));
           setError(null);
         }
       } catch (err) {
@@ -366,7 +372,7 @@ function useTileFetch<TRaw, TStats>(
     doFetch();
     const interval = setInterval(doFetch, refreshInterval);
     return () => { cancelled = true; clearInterval(interval); };
-  }, [trigger]);
+  }, [trigger, refreshInterval]);
 
   // Recompute from cached data when computeFn changes (e.g. time filter)
   useEffect(() => {

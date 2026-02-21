@@ -1,4 +1,5 @@
 import { useEntityData, type UseEntityDataOptions } from '@core/hooks/useEntityData';
+import type { RootState } from '@core/store';
 import { fetchOceanDevices } from '../slices/oceanDevicesSlice';
 import type { OceanDevice } from '@core/gen/ocean/api/ocean_pb';
 import type { PartialMessage } from '@bufbuild/protobuf';
@@ -16,7 +17,7 @@ export interface UseOceanDevicesReturn {
 export function useOceanDevices(options: UseOceanDevicesOptions = {}): UseOceanDevicesReturn {
   const { data: devices, ...rest } = useEntityData(
     fetchOceanDevices,
-    (state: any) => state.oceanDevices,
+    (state: RootState) => state.oceanDevices,
     options,
   );
   return { devices, ...rest };

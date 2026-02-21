@@ -12,9 +12,18 @@ describe('Badge', () => {
     expect(container.firstChild).toHaveClass('badge', 'badge-default');
   });
 
-  it('applies specified variant class', () => {
-    const { container } = render(<Badge variant="success">OK</Badge>);
-    expect(container.firstChild).toHaveClass('badge-success');
+  it.each(['success', 'error', 'warning', 'info'] as const)(
+    'applies badge-%s variant class',
+    (variant) => {
+      const { container } = render(<Badge variant={variant}>Label</Badge>);
+      expect(container.firstChild).toHaveClass(`badge-${variant}`);
+      expect(container.firstChild).not.toHaveClass('badge-default');
+    },
+  );
+
+  it('renders as a span element', () => {
+    const { container } = render(<Badge>Tag</Badge>);
+    expect(container.firstChild?.nodeName).toBe('SPAN');
   });
 
   it('applies badge-sm when size="sm"', () => {

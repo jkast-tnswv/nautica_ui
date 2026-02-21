@@ -1,4 +1,5 @@
 import { useEntityData, type UseEntityDataOptions } from '@core/hooks/useEntityData';
+import type { RootState } from '@core/store';
 import { fetchOceanCircuits } from '../slices/oceanCircuitsSlice';
 import type { OceanCircuit } from '@core/gen/ocean/api/ocean_pb';
 import type { PartialMessage } from '@bufbuild/protobuf';
@@ -16,7 +17,7 @@ export interface UseOceanCircuitsReturn {
 export function useOceanCircuits(options: UseOceanCircuitsOptions = {}): UseOceanCircuitsReturn {
   const { data: circuits, ...rest } = useEntityData(
     fetchOceanCircuits,
-    (state: any) => state.oceanCircuits,
+    (state: RootState) => state.oceanCircuits,
     options,
   );
   return { circuits, ...rest };

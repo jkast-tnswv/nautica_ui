@@ -136,22 +136,6 @@ export function useNotification(handler: UseNotificationOptions): UseNotificatio
 }
 
 /**
- * Create notification handlers for React Native (Alert.alert)
- */
-export function createMobileNotificationHandler(): UseNotificationOptions {
-  // This returns the config - actual Alert usage happens in the mobile app
-  // since we can't import react-native here
-  return {
-    showMessage: () => {
-      throw new Error('Mobile notification handler must be implemented in mobile app');
-    },
-    confirm: () => {
-      throw new Error('Mobile notification handler must be implemented in mobile app');
-    },
-  };
-}
-
-/**
  * Create notification handlers for Web (would use toast library)
  */
 export function createWebNotificationHandler(): UseNotificationOptions {

@@ -34,7 +34,6 @@ export {
 } from './useModalForm';
 export {
   useNotification,
-  createMobileNotificationHandler,
   createWebNotificationHandler,
   type NotificationType,
   type NotificationMessage,

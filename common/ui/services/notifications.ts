@@ -22,7 +22,8 @@ let listeners: Array<(notifications: Notification[]) => void> = [];
 
 function emit() {
   const snapshot = [...notifications];
-  listeners.forEach((fn) => fn(snapshot));
+  const currentListeners = [...listeners];
+  currentListeners.forEach((fn) => fn(snapshot));
 }
 
 export function addNotification(level: NotificationLevel, message: string, action?: NotificationAction): Notification {

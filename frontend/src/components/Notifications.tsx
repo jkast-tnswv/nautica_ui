@@ -117,23 +117,30 @@ export function NotificationPopup({ onViewApiError }: NotificationPopupProps) {
   const [exiting, setExiting] = useState(false);
   const prevCountRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    return onNotificationsChange((notifications) => {
+    const unsubscribe = onNotificationsChange((notifications) => {
       if (notifications.length > prevCountRef.current && notifications.length > 0) {
         const newest = notifications[0];
-        // Clear any existing timer
+        // Clear any existing timers
         if (timerRef.current) clearTimeout(timerRef.current);
+        if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
         setExiting(false);
         setPopup(newest);
         // Auto-dismiss after 3s
         timerRef.current = setTimeout(() => {
           setExiting(true);
-          setTimeout(() => setPopup(null), 300);
+          exitTimerRef.current = setTimeout(() => setPopup(null), 300);
         }, 3000);
       }
       prevCountRef.current = notifications.length;
     });
+    return () => {
+      unsubscribe();
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+    };
   }, []);
 
   if (!popup) return null;

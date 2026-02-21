@@ -1,4 +1,5 @@
 import { TabbedPage } from './TabbedPage';
+import { ErrorBoundary } from './ErrorBoundary';
 import { IslandFirmware, IslandModels } from '@twcode/island-ui';
 
 const tabs = [
@@ -7,5 +8,5 @@ const tabs = [
 ];
 
 export function IslandPage() {
-  return <TabbedPage tabs={tabs} />;
+  return <ErrorBoundary><TabbedPage tabs={tabs} /></ErrorBoundary>;
 }

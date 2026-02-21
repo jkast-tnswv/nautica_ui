@@ -1,4 +1,5 @@
 import { useEntityData } from '@core/hooks/useEntityData';
+import type { RootState } from '@core/store';
 import { fetchIslandFirmware } from '../slices/islandFirmwareSlice';
 import type { IslandFirmware } from '@core/gen/island/api/island_pb';
 
@@ -12,7 +13,7 @@ export interface UseIslandFirmwareReturn {
 export function useIslandFirmware(): UseIslandFirmwareReturn {
   const { data: firmware, ...rest } = useEntityData(
     fetchIslandFirmware,
-    (state: any) => state.islandFirmware,
+    (state: RootState) => state.islandFirmware,
   );
   return { firmware, ...rest };
 }

@@ -1,4 +1,5 @@
 import { TabbedPage } from './TabbedPage';
+import { ErrorBoundary } from './ErrorBoundary';
 import { AnchorLocations } from '@twcode/anchor-ui';
 import { KeelCatalog } from '@twcode/keel-ui';
 import { QuartermasterParts } from '@twcode/quartermaster-ui';
@@ -10,5 +11,5 @@ const tabs = [
 ];
 
 export function InfraPage() {
-  return <TabbedPage tabs={tabs} />;
+  return <ErrorBoundary><TabbedPage tabs={tabs} /></ErrorBoundary>;
 }

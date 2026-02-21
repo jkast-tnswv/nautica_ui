@@ -61,9 +61,20 @@ describe('validateIpv6', () => {
     expect(validateIpv6('::ffff:192.168.1.1')).toBe(true);
   });
 
+  it('accepts mixed case hex', () => {
+    expect(validateIpv6('2001:0DB8:85A3:0000:0000:8A2E:0370:7334')).toBe(true);
+    expect(validateIpv6('Fe80::aBcD')).toBe(true);
+  });
+
+  it('accepts leading zeros', () => {
+    expect(validateIpv6('2001:0db8:0000:0000:0000:0000:0000:0001')).toBe(true);
+  });
+
   it('rejects invalid IPv6', () => {
     expect(validateIpv6('')).toBe(false);
     expect(validateIpv6('2001:db8::1::2')).toBe(false); // double ::
+    expect(validateIpv6('2001:db8:85a3:0000:0000:8a2e:0370:7334:extra')).toBe(false); // too many groups
+    expect(validateIpv6('2001:zzzz::1')).toBe(false); // non-hex
   });
 });
 

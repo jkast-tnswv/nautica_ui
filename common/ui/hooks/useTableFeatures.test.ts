@@ -111,4 +111,29 @@ describe('useTableFeatures', () => {
     expect(result.current.displayData).toHaveLength(5);
     expect(result.current.totalPages).toBe(1);
   });
+
+  it('handles empty data array', () => {
+    const { result } = renderHook(() =>
+      useTableFeatures({ data: [], searchQuery: '', getSearchText }),
+    );
+    expect(result.current.displayData).toEqual([]);
+    expect(result.current.totalCount).toBe(0);
+    expect(result.current.filteredCount).toBe(0);
+  });
+
+  it('handles pageSize larger than data', () => {
+    const { result } = renderHook(() =>
+      useTableFeatures({ data, searchQuery: '', getSearchText, paginate: true, pageSize: 100 }),
+    );
+    expect(result.current.displayData).toHaveLength(5);
+    expect(result.current.totalPages).toBe(1);
+  });
+
+  it('verifies correct items on page 2', () => {
+    const { result } = renderHook(() =>
+      useTableFeatures({ data, searchQuery: '', getSearchText, paginate: true, pageSize: 2 }),
+    );
+    act(() => result.current.setCurrentPage(2));
+    expect(result.current.displayData.map(d => d.name)).toEqual(['Gamma', 'Delta']);
+  });
 });

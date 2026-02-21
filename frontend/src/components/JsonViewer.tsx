@@ -23,7 +23,9 @@ export function JsonViewer({ data, maxHeight = 400, label, editable, onChange }:
   const json = editValue ?? JSON.stringify(data, null, 2);
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(json);
+    navigator.clipboard.writeText(json).catch(() => {
+      // Clipboard API unavailable (e.g. insecure context)
+    });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [json]);
@@ -107,7 +109,9 @@ export function JsonRow({ item, summaryFields = [] }: JsonRowProps) {
 
   const handleCopy = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(JSON.stringify(item, null, 2));
+    navigator.clipboard.writeText(JSON.stringify(item, null, 2)).catch(() => {
+      // Clipboard API unavailable (e.g. insecure context)
+    });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [item]);

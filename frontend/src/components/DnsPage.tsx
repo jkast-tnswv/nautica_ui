@@ -1,6 +1,7 @@
 import React from 'react';
+import { ErrorBoundary } from './ErrorBoundary';
 import { LedgerSearch } from '@twcode/ledger-ui';
 
 export function DnsPage() {
-  return <LedgerSearch />;
+  return <ErrorBoundary><LedgerSearch /></ErrorBoundary>;
 }

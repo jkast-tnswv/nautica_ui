@@ -43,7 +43,8 @@ export function onInflightChange(listener: (count: number) => void): () => void 
 
 function changeInflight(delta: number) {
   inflightCount = Math.max(0, inflightCount + delta);
-  inflightListeners.forEach(fn => fn(inflightCount));
+  const current = [...inflightListeners];
+  current.forEach(fn => fn(inflightCount));
 }
 
 // API call history tracking
@@ -71,7 +72,9 @@ function addHistoryEntry(entry: ApiHistoryEntry) {
   if (apiHistory.length > MAX_HISTORY) {
     apiHistory.length = MAX_HISTORY;
   }
-  historyListeners.forEach(fn => fn([...apiHistory]));
+  const snapshot = [...apiHistory];
+  const current = [...historyListeners];
+  current.forEach(fn => fn(snapshot));
 }
 
 export function getApiHistory(): ApiHistoryEntry[] {
@@ -80,7 +83,8 @@ export function getApiHistory(): ApiHistoryEntry[] {
 
 export function clearApiHistory(): void {
   apiHistory.length = 0;
-  historyListeners.forEach(fn => fn([]));
+  const current = [...historyListeners];
+  current.forEach(fn => fn([]));
 }
 
 export function onApiHistoryChange(listener: (entries: ApiHistoryEntry[]) => void): () => void {
@@ -96,16 +100,17 @@ interface PendingRequest<T> {
 
 const pendingRequests = new Map<string, PendingRequest<unknown>>();
 const REQUEST_DEDUP_WINDOW = 100; // ms - dedupe requests within this window
+const PENDING_REQUEST_TTL = 5000; // ms - max age before cleanup
 
-// Clean up old pending requests periodically
-setInterval(() => {
+// Lazily clean stale entries when new requests are made
+function cleanupPendingRequests() {
   const now = Date.now();
   for (const [key, value] of pendingRequests.entries()) {
-    if (now - value.timestamp > 5000) {
+    if (now - value.timestamp > PENDING_REQUEST_TTL) {
       pendingRequests.delete(key);
     }
   }
-}, 10000);
+}
 
 // Check if the API is reachable at the given URL.
 // Accepts either a base URL (e.g., "http://host:8088") or an API URL (e.g., "/api" or "http://host:8088/api").
@@ -256,6 +261,7 @@ export class BaseService {
 
     // Only deduplicate GET requests
     if (method === 'GET') {
+      cleanupPendingRequests();
       const cacheKey = url;
       const now = Date.now();
       const pending = pendingRequests.get(cacheKey);

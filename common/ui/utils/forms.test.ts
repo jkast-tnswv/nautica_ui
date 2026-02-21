@@ -81,6 +81,14 @@ describe('parseListValue', () => {
   it('returns empty array for empty input', () => {
     expect(parseListValue('')).toEqual([]);
   });
+
+  it('returns empty array for only commas', () => {
+    expect(parseListValue(',,,,')).toEqual([]);
+  });
+
+  it('handles Unicode values', () => {
+    expect(parseListValue('café, naïve')).toEqual(['café', 'naïve']);
+  });
 });
 
 describe('formatListValue', () => {
